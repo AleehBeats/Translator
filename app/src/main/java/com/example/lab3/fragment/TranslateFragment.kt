@@ -13,7 +13,6 @@ class TranslateFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_translate, container, false)
-        return view
+        return inflater.inflate(R.layout.fragment_translate, container, false)
     }
 }
