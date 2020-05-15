@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var bottomNavigation: BottomNavigationView
     private lateinit var toolbar: Toolbar
-
+    private lateinit var title:TextView
     private val kirLatFragment = KirLatFragment()
     private val favouritesFragment = FavouritesFragment()
     private val profileFragment = ProfileFragment()
@@ -31,6 +31,7 @@ class MainActivity : AppCompatActivity() {
     private var activeFragment: Fragment = KirLatFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        super.setTheme(R.style.AppThemeDark)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         bindViews()
@@ -44,7 +45,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun bindViews() {
         toolbar = findViewById(R.id.toolbar)
-        toolbar.title = getString(R.string.kirlat_fragment)
+        title = findViewById(R.id.name)
+        title.text = getString(R.string.kirlat_fragment)
         bottomNavigation = findViewById(R.id.bottomNav)
         setSupportActionBar(toolbar)
         hidingFragments()
@@ -60,6 +62,7 @@ class MainActivity : AppCompatActivity() {
         fragmentManager.beginTransaction().add(R.id.frame, translateFragment)
             .hide(translateFragment).commit()
         fragmentManager.beginTransaction().add(R.id.frame, kirLatFragment).commit()
+        bottomNavigation.selectedItemId=R.id.kirlat
         bottomNavigation.setOnNavigationItemSelectedListener(navListener)
     }
 
@@ -68,31 +71,31 @@ class MainActivity : AppCompatActivity() {
             R.id.kirlat -> {
                 fragmentManager.beginTransaction().hide(activeFragment).show(kirLatFragment).commit()
                 activeFragment = kirLatFragment
-                toolbar.title = getString(R.string.kirlat_fragment)
+                title.text=getString(R.string.kirlat_fragment)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.profile -> {
                 fragmentManager.beginTransaction().hide(activeFragment).show(profileFragment).commit()
                 activeFragment = profileFragment
-                toolbar.title = getString(R.string.profile_fragment)
+                title.text= getString(R.string.profile_fragment)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.search -> {
                 fragmentManager.beginTransaction().hide(activeFragment).show(searchFragment).commit()
                 activeFragment = searchFragment
-                toolbar.title = getString(R.string.search_fragment)
+                title.text = getString(R.string.search_fragment)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.favourite -> {
                 fragmentManager.beginTransaction().hide(activeFragment).show(favouritesFragment).commit()
                 activeFragment = favouritesFragment
-                toolbar.title = getString(R.string.favourite_fragment)
+                title.text = getString(R.string.favourite_fragment)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.googleTranslater -> {
                 fragmentManager.beginTransaction().hide(activeFragment).show(translateFragment).commit()
                 activeFragment = translateFragment
-                toolbar.title = getString(R.string.translate_fragment)
+                title.text = getString(R.string.translate_fragment)
                 return@OnNavigationItemSelectedListener true
             }
         }

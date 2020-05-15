@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lab3.message_samples.FavouriteMessageSample
 import com.example.lab3.R
+import java.util.*
 
 class FavouritesAdapter(
     var favouriteMessages: MutableList<FavouriteMessageSample>?,

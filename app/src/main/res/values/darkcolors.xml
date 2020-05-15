@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="darkColorPrimary">#323D4E</color>
+    <color name="darkColorPrimaryDark">#323D4E</color>
+    <color name="darkColorAccent">#323D4E</color>
+    <color name="darkColorLabel">#FFFFFF</color>
+    <color name="darkColorTop">#323D4E</color>
+    <color name="darkColorMessageResponse">#323D4E</color>
+    <color name="darkColorMessageRequest">#074A46</color>
+    <color name="darkColorText">#FFFFFF</color>
+    <color name="darkColorSelectedIcon">#DB7517</color>
+    <color name="darkColorUnselectedIcon">#FFFFFF</color>
+    <color name="darkColorFavouriteItem">#323D4E</color>
+    <color name="darkColorFavouriteFragmentBackground">#000000</color>
+</resources>

@@ -7,7 +7,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AbsListView
 import android.widget.EditText
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
@@ -16,16 +15,9 @@ import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.MaterialDialog
 import com.example.lab3.*
-import com.example.lab3.adapters.FavouritesAdapter
 import com.example.lab3.adapters.RecyclerViewAdapter
-import com.example.lab3.message_samples.FavouriteMessageSample
 import com.example.lab3.message_samples.MessageSample
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
-import java.lang.StringBuilder
-import java.lang.reflect.Type
-import kotlin.reflect.typeOf
 
 class KirLatFragment : Fragment(), RecyclerViewAdapter.MessageClickListener {
     private var messageRequest: String = ""
@@ -169,7 +161,7 @@ class KirLatFragment : Fragment(), RecyclerViewAdapter.MessageClickListener {
         Log.d("ClickListening", "Begin")
         materialDialogBuilder = context?.let { MaterialDialog.Builder(it) }!!
         materialDialogBuilder.title("lol").positiveText("add")
-            .positiveColor(resources.getColor(R.color.labelColor))
+            .positiveColor(resources.getColor(R.color.darkColorAccent))
             .onPositive(MaterialDialog.SingleButtonCallback { dialog, which ->
                 savingData(message.messageString)
             }).onNegative(MaterialDialog.SingleButtonCallback { dialog, which ->

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#FFFFFF"
+    android:background="#00FFFFFF"
     android:padding="8dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -15,7 +15,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:background="#141789DB"
+        android:background="?attr/colorFavouriteItem"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -51,6 +51,7 @@
             android:maxWidth="320dp"
             android:padding="8dp"
             android:textSize="16sp"
+            android:textColor="?attr/colorText"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/view" />
 
@@ -60,7 +61,7 @@
             android:layout_height="0.5dp"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            android:background="@color/labelColor"
+            android:background="?attr/colorLabel"
             app:layout_constraintEnd_toStartOf="@+id/deleteImage"
             app:layout_constraintStart_toEndOf="@+id/detaisImage"
             app:layout_constraintTop_toBottomOf="@+id/requestedMessage" />
@@ -75,7 +76,7 @@
             android:hint="requestedMessage"
             android:maxWidth="300dp"
             android:padding="8dp"
-            android:textColor="@android:color/black"
+            android:textColor="?attr/colorText"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

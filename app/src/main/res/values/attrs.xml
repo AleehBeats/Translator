@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="colorBackground" format="color|reference"/>
+    <attr name="colorRequestMessage" format="color|reference"/>
+    <attr name="colorResponseMessage" format="color|reference"/>
+    <attr name="colorSelectedIcons" format="color|reference"/>
+    <attr name="colorUnselectedIcons" format="color|reference"/>
+    <attr name="colorText" format="color|reference"/>
+    <attr name="colorLabel" format="color|reference"/>
+    <attr name="colorLogo" format="color|reference"/>
+    <attr name="colorFavouriteItem" format="color|reference"/>
+    <attr name="colorFavouriteFragmentBackground" format="color|reference"/>
+</resources>

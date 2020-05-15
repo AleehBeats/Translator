@@ -3,10 +3,37 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/topColor</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">@color/lightColorAccent</item>
+        <item name="colorPrimaryDark">@color/lightColorPrimaryDark</item>
+        <item name="colorPrimary">@color/lightColorPrimary</item>
+        <item name="colorBackground">@drawable/lightbackground</item>
+        <item name="colorRequestMessage">@color/lightColorMessageRequest</item>
+        <item name="colorResponseMessage">@color/lightColorMessageResponse</item>
+        <item name="colorSelectedIcons">@color/lightColorSelectedIcon</item>
+        <item name="colorUnselectedIcons">@color/lightColorUnselectedIcon</item>
+        <item name="colorText">@color/lightColorText</item>
+        <item name="colorLabel">@color/lightColorLabel</item>
+        <item name="colorLogo">@drawable/darkicon</item>
+        <item name="colorFavouriteItem">@color/lightColorFavouriteItem</item>
+        <item name="colorFavouriteFragmentBackground">@color/lightColorFavouriteFragmentBackground</item>
     </style>
+
+    <style name="AppThemeDark" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorAccent">@color/darkColorAccent</item>
+        <item name="colorPrimaryDark">@color/darkColorPrimaryDark</item>
+        <item name="colorPrimary">@color/darkColorPrimary</item>
+        <item name="colorBackground">@drawable/darkbackground</item>
+        <item name="colorRequestMessage">@color/darkColorMessageRequest</item>
+        <item name="colorResponseMessage">@color/darkColorMessageResponse</item>
+        <item name="colorSelectedIcons">@color/darkColorSelectedIcon</item>
+        <item name="colorUnselectedIcons">@color/darkColorUnselectedIcon</item>
+        <item name="colorText">@color/darkColorText</item>
+        <item name="colorLabel">@color/darkColorLabel</item>
+        <item name="colorLogo">@drawable/lighticon</item>
+        <item name="colorFavouriteItem">@color/darkColorFavouriteItem</item>
+        <item name="colorFavouriteFragmentBackground">@color/darkColorFavouriteFragmentBackground</item>
+    </style>
+
     <style name="ToolbarTheme" parent="ThemeOverlay.AppCompat.Light">
         <item name="android:fontFamily">@font/montserrat</item>
     </style>

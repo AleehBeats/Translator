@@ -3,6 +3,6 @@
     android:id="@+id/translateContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background">
+    android:background="?attr/colorFavouriteFragmentBackground">
 
 </androidx.constraintlayout.widget.ConstraintLayout>

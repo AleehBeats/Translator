@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Translator</string>
+    <string name="app_name"></string>
     <string name="kirlat_fragment">Кириллица-Latynsha</string>
     <string name="favourite_fragment">Unaǵandar tіzіmі</string>
     <string name="profile_fragment">Jeke paraq</string>
@@ -13,4 +13,6 @@
     <string name="shared_preferences">Shared Preferences</string>
     <string name="request_message">request message</string>
     <string name="response_message">response message</string>
+    <string name="deleted_message">Message successfully deleted</string>
+    <string name="undo">Undo</string>
 </resources>
