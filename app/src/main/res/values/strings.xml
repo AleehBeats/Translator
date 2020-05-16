@@ -15,4 +15,6 @@
     <string name="response_message">response message</string>
     <string name="deleted_message">Message successfully deleted</string>
     <string name="undo">Undo</string>
+    <string name="theme_mode">Theme mode</string>
+    <string name="boolean_theme">Boolean theme</string>
 </resources>
