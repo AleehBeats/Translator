@@ -9,6 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.view.contains
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.example.lab3.fragment.*
@@ -50,6 +51,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater: MenuInflater = menuInflater;
+
         inflater.inflate(R.menu.action_bar, menu)
         return true
     }
@@ -75,6 +77,7 @@ class MainActivity : AppCompatActivity() {
         }
         title.text = getString(R.string.kirlat_fragment)
         bottomNavigation = findViewById(R.id.bottomNav)
+
         setSupportActionBar(toolbar)
         hidingFragments()
     }

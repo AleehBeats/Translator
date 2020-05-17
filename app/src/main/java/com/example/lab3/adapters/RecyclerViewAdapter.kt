@@ -1,9 +1,11 @@
 package com.example.lab3.adapters
 
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.content.Context
+import android.os.Build
+import android.view.*
+import android.widget.PopupMenu
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lab3.*
 import com.example.lab3.message_samples.MessageSample
@@ -14,8 +16,9 @@ class RecyclerViewAdapter(
 ) : RecyclerView.Adapter<BaseViewHolder>() {
     private lateinit var messageView: View
     private lateinit var messageTextView: TextView
+    private lateinit var context:Context
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
-
+        context= parent.context
         return if (viewType == REQUEST_MESSAGE_VIEW_TYPE) {
             messageView = LayoutInflater.from(parent.context)
                 .inflate(R.layout.request_message_layout, parent, false)
@@ -49,11 +52,16 @@ class RecyclerViewAdapter(
             messageTextView = itemView.findViewById(R.id.requestMessage)
             if (messageSample != null) {
                 messageTextView.text = messageSample.messageString
-                itemView.setOnClickListener{
-                    messageClickListener?.messageClick(adapterPosition, messageSample)
-                }
+                itemView.setOnLongClickListener(this)
             }
         }
+
+
+        override fun onLongClick(v: View?): Boolean {
+            messageClickListener?.showPopUpMenu(adapterPosition, itemView)
+            return true
+        }
+
     }
 
     inner class ResponseMessageHolder(itemView: View) : BaseViewHolder(itemView) {
@@ -61,10 +69,14 @@ class RecyclerViewAdapter(
             messageTextView = itemView.findViewById(R.id.responseMessage)
             if (messageSample != null) {
                 messageTextView.text = messageSample.messageString
-                itemView.setOnClickListener {
-                    messageClickListener?.messageClick(adapterPosition, messageSample)
-                }
+                itemView.setOnLongClickListener(this)
             }
+        }
+
+
+        override fun onLongClick(v: View?): Boolean {
+            messageClickListener?.showPopUpMenu(adapterPosition, itemView)
+            return true
         }
 
     }
@@ -72,7 +84,10 @@ class RecyclerViewAdapter(
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
         holder.bind(messageSamples?.get(position))
     }
-    interface MessageClickListener{
-        fun messageClick(position: Int, message: MessageSample)
+
+    interface MessageClickListener {
+        fun showPopUpMenu(position: Int, itemView: View)
     }
 }
+
+

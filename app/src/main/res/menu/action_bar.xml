@@ -1,13 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item android:id="@+id/chSendMessageToAuthor"
-        android:title="@string/send_message_to_author"
-        app:showAsAction="never"/>
-    <item android:id="@+id/chShareExtra"
-        android:title="@string/share_extra"
-        app:showAsAction="never"/>
-    <item android:id="@+id/chNeedExtra"
-        android:title ="@string/need_extra"
-        app:showAsAction="never"/>
+    <item android:title=""
+        android:icon="@drawable/three_dots"
+        app:showAsAction="ifRoom">
+        <menu>
+            <item
+                android:id="@+id/chSendMessageToAuthor"
+                android:title="@string/send_message_to_author"
+                android:orderInCategory="0"
+                android:icon="@drawable/msg"
+                app:showAsAction="never"/>
+            <item android:id="@+id/chShareExtra"
+                android:title="@string/share_extra"
+                android:icon="@drawable/share"
+                app:showAsAction="never"/>
+            <item android:id="@+id/chNeedExtra"
+                android:title ="@string/need_extra"
+                android:icon="@drawable/paperplane"
+                app:showAsAction="never"/>
+        </menu>
+    </item>
 </menu>

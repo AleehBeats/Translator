@@ -1,25 +1,33 @@
 package com.example.lab3.fragment
 
+import android.content.ClipboardManager
 import android.content.Context
 import android.content.SharedPreferences
+import android.graphics.Color
+import android.graphics.Typeface
+import android.os.Build
 import android.os.Bundle
-import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.text.Spannable
+import android.text.SpannableString
+import android.view.*
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.PopupMenu
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.MaterialDialog
-import com.example.lab3.*
+import com.example.lab3.KirLatTranslater
+import com.example.lab3.MessageItemDecoration
+import com.example.lab3.R
 import com.example.lab3.adapters.RecyclerViewAdapter
 import com.example.lab3.message_samples.MessageSample
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
-class KirLatFragment : Fragment(), RecyclerViewAdapter.MessageClickListener {
+
+class KirLatFragment : Fragment(), RecyclerViewAdapter.MessageClickListener{
     private var messageRequest: String = ""
     private var messageResponse: String = ""
     private var messageString: String = ""
@@ -27,7 +35,7 @@ class KirLatFragment : Fragment(), RecyclerViewAdapter.MessageClickListener {
     private var textEraser: String = ""
 
     private lateinit var materialDialogBuilder: MaterialDialog.Builder
-    private var kirLatTranslator:KirLatTranslater = KirLatTranslater()
+    private var kirLatTranslator: KirLatTranslater = KirLatTranslater()
     private lateinit var sendImage: ImageView
     private lateinit var inputMessage: EditText
     private lateinit var recyclerView: RecyclerView
@@ -52,7 +60,7 @@ class KirLatFragment : Fragment(), RecyclerViewAdapter.MessageClickListener {
                         floatingActionButton.show()
                     }
                 }
-                RecyclerView.SCROLL_STATE_SETTLING ->{
+                RecyclerView.SCROLL_STATE_SETTLING -> {
 
                 }
             }
@@ -88,6 +96,16 @@ class KirLatFragment : Fragment(), RecyclerViewAdapter.MessageClickListener {
         super.onPause()
     }
 
+    @RequiresApi(Build.VERSION_CODES.Q)
+    override fun showPopUpMenu(position: Int, itemView: View) {
+        val popup = PopupMenu(context, itemView)
+        popup.gravity = Gravity.END
+        popup.setForceShowIcon(true)
+        val inflater = popup.menuInflater
+        inflater.inflate(R.menu.context_menu, popup.menu)
+        popup.show()
+    }
+
     private fun setAdapter() {
         messageSampleList = mutableListOf()
         recyclerViewAdapter =
@@ -120,9 +138,10 @@ class KirLatFragment : Fragment(), RecyclerViewAdapter.MessageClickListener {
         floatingActionButton.setOnClickListener {
             scrollToBottom()
         }
-        val itemDecoration = MessageItemDecoration(14,16)
+        val itemDecoration = MessageItemDecoration(14, 16)
         recyclerView.addItemDecoration(itemDecoration)
     }
+
 
     private fun scrollToBottom() {
         val smoothScroller = object : LinearSmoothScroller(context) {
@@ -157,17 +176,6 @@ class KirLatFragment : Fragment(), RecyclerViewAdapter.MessageClickListener {
         recyclerViewAdapter.notifyDataSetChanged()
     }
 
-    override fun messageClick(position: Int, message: MessageSample) {
-        Log.d("ClickListening", "Begin")
-        materialDialogBuilder = context?.let { MaterialDialog.Builder(it) }!!
-        materialDialogBuilder.title("lol").positiveText("add")
-            .positiveColor(resources.getColor(R.color.darkColorAccent))
-            .onPositive(MaterialDialog.SingleButtonCallback { dialog, which ->
-                savingData(message.messageString)
-            }).onNegative(MaterialDialog.SingleButtonCallback { dialog, which ->
-            }).show()
-        Log.d("ClickListening", "End")
-    }
 
     private fun savingData(message: String) {
         val editor = sharedPreferences.edit()

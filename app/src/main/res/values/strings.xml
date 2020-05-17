@@ -17,4 +17,8 @@
     <string name="undo">Undo</string>
     <string name="theme_mode">Theme mode</string>
     <string name="boolean_theme">Boolean theme</string>
+    <string name="popup_copy">Kóshіrý</string>
+    <string name="popup_share">Bólіsý</string>
+    <string name="popup_delete">Óshіrý</string>
+    <string name="popup_add_favourites">Unaǵandar tіzіmіne qosý</string>
 </resources>

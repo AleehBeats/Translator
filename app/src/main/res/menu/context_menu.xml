@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".activities.PatientSelectionActivity">
+    <item
+        android:id="@+id/chCopy"
+        android:icon="@drawable/copy"
+        android:title="@string/popup_copy" />
+    <item
+        android:id="@+id/chShare"
+        android:icon="@drawable/share"
+        android:title="@string/popup_share" />
+    <item
+        android:id="@+id/chDelete"
+        android:icon="@drawable/trash"
+        android:title="@string/popup_delete" />
+    <item
+        android:id="@+id/chAddToFavourites"
+        android:icon="@drawable/ic_favourite"
+        android:title="@string/popup_add_favourites" />
+</menu>
