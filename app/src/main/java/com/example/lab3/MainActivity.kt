@@ -88,14 +88,14 @@ class MainActivity : AppCompatActivity() {
         startActivity(intent)
     }
     private fun hidingFragments() {
-        fragmentManager.beginTransaction().add(R.id.frame, favouritesFragment)
-            .hide(favouritesFragment).commit()
-        fragmentManager.beginTransaction().add(R.id.frame, profileFragment).hide(profileFragment)
-            .commit()
-        fragmentManager.beginTransaction().add(R.id.frame, searchFragment).hide(searchFragment)
-            .commit()
-        fragmentManager.beginTransaction().add(R.id.frame, translateFragment)
-            .hide(translateFragment).commit()
+//        fragmentManager.beginTransaction().add(R.id.frame, favouritesFragment)
+//            .hide(favouritesFragment).commit()
+//        fragmentManager.beginTransaction().add(R.id.frame, profileFragment).hide(profileFragment)
+//            .commit()
+//        fragmentManager.beginTransaction().add(R.id.frame, searchFragment).hide(searchFragment)
+//            .commit()
+//        fragmentManager.beginTransaction().add(R.id.frame, translateFragment)
+//            .hide(translateFragment).commit()
         fragmentManager.beginTransaction().add(R.id.frame, kirLatFragment).commit()
         bottomNavigation.selectedItemId = R.id.kirlat
         bottomNavigation.setOnNavigationItemSelectedListener(navListener)
@@ -104,37 +104,37 @@ class MainActivity : AppCompatActivity() {
     private val navListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.kirlat -> {
-                fragmentManager.beginTransaction().hide(activeFragment).show(kirLatFragment)
-                    .commit()
                 activeFragment = kirLatFragment
+                fragmentManager.beginTransaction().replace(R.id.frame, activeFragment)
+                    .commit()
                 title.text = getString(R.string.kirlat_fragment)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.profile -> {
-                fragmentManager.beginTransaction().hide(activeFragment).show(profileFragment)
-                    .commit()
                 activeFragment = profileFragment
+                fragmentManager.beginTransaction().replace(R.id.frame, activeFragment)
+                    .commit()
                 title.text = getString(R.string.profile_fragment)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.search -> {
-                fragmentManager.beginTransaction().hide(activeFragment).show(searchFragment)
-                    .commit()
                 activeFragment = searchFragment
+                fragmentManager.beginTransaction().replace(R.id.frame, activeFragment)
+                    .commit()
                 title.text = getString(R.string.search_fragment)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.favourite -> {
-                fragmentManager.beginTransaction().hide(activeFragment).show(favouritesFragment)
-                    .commit()
                 activeFragment = favouritesFragment
+                fragmentManager.beginTransaction().replace(R.id.frame, activeFragment)
+                    .commit()
                 title.text = getString(R.string.favourite_fragment)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.googleTranslater -> {
-                fragmentManager.beginTransaction().hide(activeFragment).show(translateFragment)
-                    .commit()
                 activeFragment = translateFragment
+                fragmentManager.beginTransaction().replace(R.id.frame, activeFragment)
+                    .commit()
                 title.text = getString(R.string.translate_fragment)
                 return@OnNavigationItemSelectedListener true
             }

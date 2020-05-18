@@ -7,6 +7,5 @@ import androidx.room.PrimaryKey
 data class MessageSample(
     @PrimaryKey
     var id: Int,
-    var messageString: String,
-    var isClicked:Boolean=false
+    var messageString: String
 )

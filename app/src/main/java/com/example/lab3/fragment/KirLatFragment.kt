@@ -1,33 +1,33 @@
 package com.example.lab3.fragment
 
+import android.R.attr.label
+import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
-import android.content.SharedPreferences
-import android.graphics.Color
-import android.graphics.Typeface
 import android.os.Build
 import android.os.Bundle
-import android.text.Spannable
-import android.text.SpannableString
 import android.view.*
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.PopupMenu
 import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.MaterialDialog
-import com.example.lab3.KirLatTranslater
+import com.example.lab3.KirLatTranslator
 import com.example.lab3.MessageItemDecoration
 import com.example.lab3.R
+import com.example.lab3.SharedPreferencesConfig
 import com.example.lab3.adapters.RecyclerViewAdapter
 import com.example.lab3.message_samples.MessageSample
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 
-class KirLatFragment : Fragment(), RecyclerViewAdapter.MessageClickListener{
+class KirLatFragment : Fragment(), RecyclerViewAdapter.MessageClickListener,
+    PopupMenu.OnMenuItemClickListener {
     private var messageRequest: String = ""
     private var messageResponse: String = ""
     private var messageString: String = ""
@@ -35,7 +35,7 @@ class KirLatFragment : Fragment(), RecyclerViewAdapter.MessageClickListener{
     private var textEraser: String = ""
 
     private lateinit var materialDialogBuilder: MaterialDialog.Builder
-    private var kirLatTranslator: KirLatTranslater = KirLatTranslater()
+    private var kirLatTranslator: KirLatTranslator = KirLatTranslator()
     private lateinit var sendImage: ImageView
     private lateinit var inputMessage: EditText
     private lateinit var recyclerView: RecyclerView
@@ -45,9 +45,10 @@ class KirLatFragment : Fragment(), RecyclerViewAdapter.MessageClickListener{
     private lateinit var layoutManager: LinearLayoutManager
     private lateinit var messageSampleList: MutableList<MessageSample>
     private lateinit var messageSample: MessageSample
-    private lateinit var sharedPreferences: SharedPreferences
 
+    private lateinit var sharedPreferencesConfig: SharedPreferencesConfig
     private var lastVisibleItem = 0
+    private var itemPosition = 0
     private val scrollListener = object : RecyclerView.OnScrollListener() {
         override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
             when (newState) {
@@ -77,11 +78,8 @@ class KirLatFragment : Fragment(), RecyclerViewAdapter.MessageClickListener{
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        sharedPreferences =
-            context?.getSharedPreferences(
-                getString(R.string.shared_preferences),
-                Context.MODE_PRIVATE
-            )!!
+        sharedPreferencesConfig = context?.let { SharedPreferencesConfig(it) }!!
+        messageSampleList = sharedPreferencesConfig.extractingKirLatMessages()
         bindViews(view)
         setAdapter()
     }
@@ -96,18 +94,62 @@ class KirLatFragment : Fragment(), RecyclerViewAdapter.MessageClickListener{
         super.onPause()
     }
 
+    override fun onDestroy() {
+        sharedPreferencesConfig.savingKirLatMessages(messageSampleList)
+        super.onDestroy()
+    }
+
     @RequiresApi(Build.VERSION_CODES.Q)
     override fun showPopUpMenu(position: Int, itemView: View) {
         val popup = PopupMenu(context, itemView)
+        itemPosition = position
         popup.gravity = Gravity.END
         popup.setForceShowIcon(true)
         val inflater = popup.menuInflater
         inflater.inflate(R.menu.context_menu, popup.menu)
+        popup.setOnMenuItemClickListener(this)
         popup.show()
     }
 
+    override fun onMenuItemClick(item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            R.id.chCopy -> {
+
+            }
+            R.id.chShare -> {
+
+            }
+            R.id.chDelete -> {
+                if(itemPosition%2==0){
+                    messageSampleList.removeAt(itemPosition)
+                    messageSampleList.removeAt(itemPosition)
+                }
+                else{
+                    messageSampleList.removeAt(itemPosition)
+                    messageSampleList.removeAt(itemPosition-1)
+                }
+                recyclerViewAdapter.notifyDataSetChanged()
+                return true
+            }
+            R.id.chAddToFavourites -> {
+                if (itemPosition % 2 == 0)
+                    sharedPreferencesConfig.savingMessage(
+                        messageSampleList[itemPosition],
+                        messageSampleList[itemPosition + 1]
+                    )
+                else {
+                    sharedPreferencesConfig.savingMessage(
+                        messageSampleList[itemPosition - 1],
+                        messageSampleList[itemPosition]
+                    )
+                }
+                return true
+            }
+        }
+        return false
+    }
+
     private fun setAdapter() {
-        messageSampleList = mutableListOf()
         recyclerViewAdapter =
             RecyclerViewAdapter(
                 messageSampleList,
@@ -130,7 +172,6 @@ class KirLatFragment : Fragment(), RecyclerViewAdapter.MessageClickListener{
             if (inputMessage.text.isNotEmpty()) {
                 creatingRequestMessage()
                 creatingResponseMessage()
-
             } else {
 
             }
@@ -174,13 +215,6 @@ class KirLatFragment : Fragment(), RecyclerViewAdapter.MessageClickListener{
             MessageSample(id, string)
         messageSampleList.add(messageSample)
         recyclerViewAdapter.notifyDataSetChanged()
-    }
-
-
-    private fun savingData(message: String) {
-        val editor = sharedPreferences.edit()
-        editor?.putString(context?.getString(R.string.request_message), message)
-        editor?.apply()
     }
 
 

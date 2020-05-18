@@ -3,7 +3,7 @@ package com.example.lab3
 import com.afollestad.materialdialogs.MaterialDialog
 import java.lang.StringBuilder
 
-class KirLatTranslater {
+class KirLatTranslator {
     private lateinit var slicedWord: CharArray
     private lateinit var materialDialogBuilder: MaterialDialog.Builder
     private var stringBuilder: StringBuilder = StringBuilder()

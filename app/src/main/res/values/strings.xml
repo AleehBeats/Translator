@@ -11,8 +11,10 @@
     <string name="charged_text">Сәлем, қалайсың?</string>
     <string name="need_input">Need word to translate</string>
     <string name="shared_preferences">Shared Preferences</string>
-    <string name="request_message">request message</string>
+    <string name="selected_message">selected message</string>
     <string name="response_message">response message</string>
+    <string name="kirlat_messages">kirlat messages</string>
+    <string name="favourite_messages">favourite messages</string>
     <string name="deleted_message">Message successfully deleted</string>
     <string name="undo">Undo</string>
     <string name="theme_mode">Theme mode</string>

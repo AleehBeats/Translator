@@ -42,10 +42,6 @@ class RecyclerViewAdapter(
         }
     }
 
-//    fun addingMessage(message: MessageSample) {
-//        messageSamples?.add(message)
-//        notifyDataSetChanged()
-//    }
 
     inner class RequestMessageHolder(itemView: View) : BaseViewHolder(itemView) {
         override fun bind(messageSample: MessageSample?) {
@@ -61,6 +57,7 @@ class RecyclerViewAdapter(
             messageClickListener?.showPopUpMenu(adapterPosition, itemView)
             return true
         }
+
 
     }
 
@@ -78,6 +75,7 @@ class RecyclerViewAdapter(
             messageClickListener?.showPopUpMenu(adapterPosition, itemView)
             return true
         }
+
 
     }
 
