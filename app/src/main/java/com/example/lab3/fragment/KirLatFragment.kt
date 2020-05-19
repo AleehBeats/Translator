@@ -34,7 +34,6 @@ class KirLatFragment : Fragment(), RecyclerViewAdapter.MessageClickListener,
     private var messageId: Int = 0
     private var textEraser: String = ""
 
-    private lateinit var materialDialogBuilder: MaterialDialog.Builder
     private var kirLatTranslator: KirLatTranslator = KirLatTranslator()
     private lateinit var sendImage: ImageView
     private lateinit var inputMessage: EditText
@@ -120,44 +119,15 @@ class KirLatFragment : Fragment(), RecyclerViewAdapter.MessageClickListener,
 
             }
             R.id.chDelete -> {
-                if(itemPosition%2==0){
-                    messageSampleList.removeAt(itemPosition)
-                    messageSampleList.removeAt(itemPosition)
-                }
-                else{
-                    messageSampleList.removeAt(itemPosition)
-                    messageSampleList.removeAt(itemPosition-1)
-                }
-                recyclerViewAdapter.notifyDataSetChanged()
+                deletingKirLatPairs()
                 return true
             }
             R.id.chAddToFavourites -> {
-                if (itemPosition % 2 == 0)
-                    sharedPreferencesConfig.savingMessage(
-                        messageSampleList[itemPosition],
-                        messageSampleList[itemPosition + 1]
-                    )
-                else {
-                    sharedPreferencesConfig.savingMessage(
-                        messageSampleList[itemPosition - 1],
-                        messageSampleList[itemPosition]
-                    )
-                }
+                addingToFavourites()
                 return true
             }
         }
         return false
-    }
-
-    private fun setAdapter() {
-        recyclerViewAdapter =
-            RecyclerViewAdapter(
-                messageSampleList,
-                messageClickListener = this
-            )
-        recyclerView.adapter = recyclerViewAdapter
-        recyclerView.setHasFixedSize(true)
-
     }
 
     private fun bindViews(view: View) {
@@ -181,6 +151,45 @@ class KirLatFragment : Fragment(), RecyclerViewAdapter.MessageClickListener,
         }
         val itemDecoration = MessageItemDecoration(14, 16)
         recyclerView.addItemDecoration(itemDecoration)
+    }
+
+    private fun addingToFavourites() {
+        if (itemPosition % 2 == 0)
+            sharedPreferencesConfig.savingMessage(
+                messageSampleList[itemPosition],
+                messageSampleList[itemPosition + 1]
+            )
+        else {
+            sharedPreferencesConfig.savingMessage(
+                messageSampleList[itemPosition - 1],
+                messageSampleList[itemPosition]
+            )
+        }
+    }
+
+    private fun deletingKirLatPairs() {
+        if (itemPosition % 2 == 0) {
+            messageSampleList.removeAt(itemPosition)
+            recyclerViewAdapter.notifyItemRemoved(itemPosition)
+            messageSampleList.removeAt(itemPosition)
+            recyclerViewAdapter.notifyItemRemoved(itemPosition)
+        } else {
+            messageSampleList.removeAt(itemPosition)
+            recyclerViewAdapter.notifyItemRemoved(itemPosition)
+            messageSampleList.removeAt(itemPosition - 1)
+            recyclerViewAdapter.notifyItemRemoved(itemPosition - 1)
+        }
+    }
+
+    private fun setAdapter() {
+        recyclerViewAdapter =
+            RecyclerViewAdapter(
+                messageSampleList,
+                messageClickListener = this
+            )
+        recyclerView.adapter = recyclerViewAdapter
+        recyclerView.setHasFixedSize(true)
+
     }
 
 
@@ -216,6 +225,4 @@ class KirLatFragment : Fragment(), RecyclerViewAdapter.MessageClickListener,
         messageSampleList.add(messageSample)
         recyclerViewAdapter.notifyDataSetChanged()
     }
-
-
 }

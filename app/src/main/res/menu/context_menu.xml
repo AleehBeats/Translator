@@ -5,18 +5,18 @@
     tools:context=".activities.PatientSelectionActivity">
     <item
         android:id="@+id/chCopy"
-        android:icon="@drawable/copy"
+        android:icon="@drawable/ic_copy"
         android:title="@string/popup_copy" />
     <item
         android:id="@+id/chShare"
-        android:icon="@drawable/share"
+        android:icon="@drawable/ic_share"
         android:title="@string/popup_share" />
     <item
         android:id="@+id/chDelete"
-        android:icon="@drawable/trash"
+        android:icon="@drawable/ic_trash"
         android:title="@string/popup_delete" />
     <item
         android:id="@+id/chAddToFavourites"
-        android:icon="@drawable/ic_favourite"
+        android:icon="@drawable/ic_like"
         android:title="@string/popup_add_favourites" />
 </menu>

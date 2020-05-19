@@ -10,4 +10,5 @@
     <attr name="colorLogo" format="color|reference"/>
     <attr name="colorFavouriteItem" format="color|reference"/>
     <attr name="colorFavouriteFragmentBackground" format="color|reference"/>
+    <attr name="colorPopUpMenuIcons" format="color|reference"/>
 </resources>

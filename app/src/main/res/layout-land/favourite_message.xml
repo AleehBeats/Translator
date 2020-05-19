@@ -23,14 +23,14 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/detaisImage"
+            android:id="@+id/dragImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             app:layout_constraintBottom_toBottomOf="@+id/view"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/view"
-            app:srcCompat="@drawable/settings_png" />
+            app:srcCompat="@drawable/ic_drag" />
 
         <ImageView
             android:id="@+id/deleteImage"
@@ -40,7 +40,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/view"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/view"
-            app:srcCompat="@drawable/delete_png" />
+            app:srcCompat="@drawable/ic_favtrash" />
 
         <TextView
             android:id="@+id/responsedMessage"
@@ -64,7 +64,7 @@
             android:layout_marginEnd="8dp"
             android:background="?attr/colorLabel"
             app:layout_constraintEnd_toStartOf="@+id/deleteImage"
-            app:layout_constraintStart_toEndOf="@+id/detaisImage"
+            app:layout_constraintStart_toEndOf="@+id/dragImage"
             app:layout_constraintTop_toBottomOf="@+id/requestedMessage" />
 
         <TextView

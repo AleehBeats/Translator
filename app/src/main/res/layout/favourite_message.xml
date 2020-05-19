@@ -11,10 +11,6 @@
         android:id="@+id/favouriteMessage"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="9dp"
-        android:layout_marginTop="9dp"
-        android:layout_marginEnd="9dp"
-        android:layout_marginBottom="9dp"
         android:background="@drawable/favourite_item"
         android:elevation="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -23,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/detaisImage"
+            android:id="@+id/dragImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="9dp"
@@ -31,7 +27,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/view"
             app:layout_constraintVertical_bias="0.59"
-            app:srcCompat="@drawable/settings_png" />
+            app:srcCompat="@drawable/ic_drag" />
 
         <ImageView
             android:id="@+id/deleteImage"
@@ -43,7 +39,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/view"
             app:layout_constraintVertical_bias="0.541"
-            app:srcCompat="@drawable/delete_png" />
+            app:srcCompat="@drawable/ic_favtrash" />
 
         <TextView
             android:id="@+id/responsedMessage"
@@ -68,7 +64,7 @@
             android:layout_marginEnd="13dp"
             android:background="?attr/colorLabel"
             app:layout_constraintEnd_toStartOf="@+id/deleteImage"
-            app:layout_constraintStart_toEndOf="@+id/detaisImage"
+            app:layout_constraintStart_toEndOf="@+id/dragImage"
             app:layout_constraintTop_toBottomOf="@+id/requestedMessage" />
 
         <TextView
@@ -82,6 +78,7 @@
             android:padding="8dp"
             android:textColor="?attr/colorText"
             android:textSize="16sp"
+            android:textStyle="normal"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>

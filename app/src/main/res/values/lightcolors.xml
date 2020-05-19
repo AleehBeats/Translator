@@ -12,4 +12,5 @@
     <color name="lightColorUnselectedIcon">#949494</color>
     <color name="lightColorFavouriteItem">#141789DB</color>
     <color name="lightColorFavouriteFragmentBackground">#FFFFFF</color>
+    <color name="lightColorPopupMenuIcons">#808080</color>
 </resources>

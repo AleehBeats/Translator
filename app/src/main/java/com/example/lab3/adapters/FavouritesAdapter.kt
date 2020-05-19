@@ -18,7 +18,7 @@ class FavouritesAdapter(
     private lateinit var respondedMessage: TextView
     private lateinit var deleteImage: ImageView
     private lateinit var favouriteMessageView: View
-
+    private lateinit var dragImage: ImageView
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavouritesViewHolder {
         favouriteMessageView = LayoutInflater.from(parent.context)
@@ -43,6 +43,7 @@ class FavouritesAdapter(
             requestedMessage = itemView.findViewById(R.id.requestedMessage)
             respondedMessage = itemView.findViewById(R.id.responsedMessage)
             deleteImage = itemView.findViewById(R.id.deleteImage)
+            dragImage=itemView.findViewById(R.id.dragImage)
             requestedMessage.text = favouriteMessageSample?.requestedMessage
             respondedMessage.text = favouriteMessageSample?.respondedMessage
             deleteImage.setOnClickListener {

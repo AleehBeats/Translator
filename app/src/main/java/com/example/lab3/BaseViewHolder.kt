@@ -6,5 +6,4 @@ import com.example.lab3.message_samples.MessageSample
 
 abstract class BaseViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnLongClickListener {
     abstract fun bind(messageSample: MessageSample?)
-
 }

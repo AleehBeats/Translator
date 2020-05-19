@@ -12,4 +12,5 @@
     <color name="darkColorUnselectedIcon">#FFFFFF</color>
     <color name="darkColorFavouriteItem">#323D4E</color>
     <color name="darkColorFavouriteFragmentBackground">#000000</color>
+    <color name="darkColorPopupMenuIcons">#FFFFFF</color>
 </resources>
