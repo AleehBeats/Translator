@@ -15,8 +15,8 @@
     <string name="response_message">response message</string>
     <string name="kirlat_messages">kirlat messages</string>
     <string name="favourite_messages">favourite messages</string>
-    <string name="deleted_message">Message successfully deleted</string>
-    <string name="undo">Undo</string>
+    <string name="deleted_message">Oshirildi: %1$s | %2$s</string>
+    <string name="undo">Keri qaitaru</string>
     <string name="theme_mode">Theme mode</string>
     <string name="boolean_theme">Boolean theme</string>
     <string name="popup_copy">Kóshіrý</string>

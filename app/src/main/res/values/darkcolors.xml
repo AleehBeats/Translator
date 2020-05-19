@@ -2,7 +2,7 @@
 <resources>
     <color name="darkColorPrimary">#323D4E</color>
     <color name="darkColorPrimaryDark">#323D4E</color>
-    <color name="darkColorAccent">#323D4E</color>
+    <color name="darkColorAccent">#DB7517</color>
     <color name="darkColorLabel">#FFFFFF</color>
     <color name="darkColorTop">#323D4E</color>
     <color name="darkColorMessageResponse">#323D4E</color>

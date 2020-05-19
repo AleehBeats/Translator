@@ -18,7 +18,7 @@
         android:elevation="10dp"
         android:fontFamily="@font/montserrat"
         android:hint=""
-        android:maxWidth="363dp"
+        android:maxWidth="660dp"
         android:padding="10dp"
         android:textColor="?attr/colorText"
         android:textSize="16sp"

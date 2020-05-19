@@ -43,7 +43,7 @@ class FavouritesFragment : Fragment(), FavouritesAdapter.DeleteItemListener {
     override fun deleteItem(position: Int, favouriteMessageSample: FavouriteMessageSample?) {
         favouriteMessage = favouriteMessageList[position]
         favouriteMessageList.removeAt(position)
-        Snackbar.make(favouriteFragment, R.string.deleted_message, 3000).setAction(R.string.undo) {
+        Snackbar.make(favouriteFragment, context!!.getString(R.string.deleted_message, favouriteMessage.requestedMessage, favouriteMessage.respondedMessage), 3000).setAction(R.string.undo) {
             favouriteMessageList.add(0, favouriteMessage)
             recyclerViewAdapter.notifyItemInserted(0)
             scrollToUp()

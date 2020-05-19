@@ -39,4 +39,5 @@
         <item name="android:itemTextAppearance">@color/darkColorMessageRequest</item>
     </style>
 
+
 </resources>
