@@ -9,7 +9,7 @@
         android:title="@string/popup_copy" />
     <item
         android:id="@+id/chShare"
-        android:icon="@drawable/ic_share"
+        android:icon="@drawable/ic_share1"
         android:title="@string/popup_share" />
     <item
         android:id="@+id/chDelete"

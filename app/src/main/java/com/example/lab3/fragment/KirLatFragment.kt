@@ -6,6 +6,7 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.EditText
 import android.widget.ImageView
@@ -98,16 +99,25 @@ class KirLatFragment : Fragment(), RecyclerViewAdapter.MessageClickListener,
         super.onDestroy()
     }
 
-    @RequiresApi(Build.VERSION_CODES.Q)
     override fun showPopUpMenu(position: Int, itemView: View) {
         val popup = PopupMenu(context, itemView)
         itemPosition = position
+        @RequiresApi(Build.VERSION_CODES.M)
         popup.gravity = Gravity.END
-        popup.setForceShowIcon(true)
         val inflater = popup.menuInflater
         inflater.inflate(R.menu.context_menu, popup.menu)
         popup.setOnMenuItemClickListener(this)
-        popup.show()
+        try {
+            val fieldPopup = PopupMenu::class.java.getDeclaredField("mPopup")
+            fieldPopup.isAccessible = true
+            val mPopup = fieldPopup.get(popup)
+            mPopup.javaClass.getDeclaredMethod("setForceShowIcon", Boolean::class.java)
+                .invoke(mPopup, true)
+        } catch (e: Exception) {
+            Log.e("Main", "Error showing menu icons.", e)
+        } finally {
+            popup.show()
+        }
     }
 
     override fun onMenuItemClick(item: MenuItem?): Boolean {
