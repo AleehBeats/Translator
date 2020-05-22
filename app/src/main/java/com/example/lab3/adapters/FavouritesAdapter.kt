@@ -34,10 +34,6 @@ class FavouritesAdapter(
         holder.bind(favouriteMessages?.get(position))
     }
 
-//    fun addFavouriteMessage(favouriteMessageSample: FavouriteMessageSample){
-//        favouriteMessages?.add(favouriteMessageSample)
-//        notifyDataSetChanged()
-//    }
     inner class FavouritesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(favouriteMessageSample: FavouriteMessageSample?) {
             requestedMessage = itemView.findViewById(R.id.requestedMessage)

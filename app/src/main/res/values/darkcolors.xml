@@ -13,4 +13,6 @@
     <color name="darkColorFavouriteItem">#323D4E</color>
     <color name="darkColorFavouriteFragmentBackground">#000000</color>
     <color name="darkColorPopupMenuIcons">#FFFFFF</color>
+    <color name="darkColorPlayButtonCircle">#323D4E</color>
+    <color name="darkColorPlayButtonTriangle">#DB7517</color>
 </resources>

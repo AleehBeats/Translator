@@ -9,7 +9,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.core.view.contains
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.example.lab3.fragment.*
@@ -25,7 +24,7 @@ class MainActivity : AppCompatActivity() {
     private val kirLatFragment = KirLatFragment()
     private val favouritesFragment = FavouritesFragment()
     private val profileFragment = ProfileFragment()
-    private val searchFragment = SearchFragment()
+    private val searchFragment = InterestsFragment()
     private val translateFragment = TranslateFragment()
     private var activeFragment: Fragment = KirLatFragment()
     private lateinit var themeModeImage: ImageView

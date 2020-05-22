@@ -11,4 +11,10 @@
     <attr name="colorFavouriteItem" format="color|reference"/>
     <attr name="colorFavouriteFragmentBackground" format="color|reference"/>
     <attr name="colorPopUpMenuIcons" format="color|reference"/>
+    <attr name="colorPlayButtonCircle" format="color|reference"/>
+    <attr name="colorPlayButtonTriangle" format="color|reference"/>
+    <declare-styleable name="VideoPlayerView">
+        <attr name="isSeekBarVisible" format="boolean"/>
+        <attr name="isPlayButtonVisible" format="boolean"/>
+    </declare-styleable>
 </resources>

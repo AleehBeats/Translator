@@ -17,6 +17,8 @@
         <item name="colorFavouriteItem">@color/lightColorFavouriteItem</item>
         <item name="colorFavouriteFragmentBackground">@color/lightColorFavouriteFragmentBackground</item>
         <item name="colorPopUpMenuIcons">@color/lightColorPopupMenuIcons</item>
+        <item name="colorPlayButtonTriangle">@color/lightColorPlayButtonTriangle</item>
+        <item name="colorPlayButtonCircle">@color/lightColorPlayButtonCircle</item>
         <item name="android:popupMenuStyle">@style/LightPopupMenu</item>
         <item name="android:fontFamily">@font/montserrat</item>
     </style>
@@ -36,6 +38,8 @@
         <item name="colorFavouriteItem">@color/darkColorFavouriteItem</item>
         <item name="colorFavouriteFragmentBackground">@color/darkColorFavouriteFragmentBackground</item>
         <item name="colorPopUpMenuIcons">@color/darkColorPopupMenuIcons</item>
+        <item name="colorPlayButtonTriangle">@color/darkColorPlayButtonTriangle</item>
+        <item name="colorPlayButtonCircle">@color/darkColorPlayButtonCircle</item>
         <item name="android:popupMenuStyle">@style/DarkPopupMenu</item>
         <item name="android:textColor">@color/darkColorText</item>
         <item name="android:fontFamily">@font/montserrat</item>
