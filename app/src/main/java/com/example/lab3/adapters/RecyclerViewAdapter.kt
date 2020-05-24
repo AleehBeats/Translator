@@ -16,9 +16,9 @@ class RecyclerViewAdapter(
 ) : RecyclerView.Adapter<BaseViewHolder>() {
     private lateinit var messageView: View
     private lateinit var messageTextView: TextView
-    private lateinit var context:Context
+    private lateinit var context: Context
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
-        context= parent.context
+        context = parent.context
         return if (viewType == REQUEST_MESSAGE_VIEW_TYPE) {
             messageView = LayoutInflater.from(parent.context)
                 .inflate(R.layout.request_message_layout, parent, false)
@@ -70,13 +70,10 @@ class RecyclerViewAdapter(
             }
         }
 
-
         override fun onLongClick(v: View?): Boolean {
             messageClickListener?.showPopUpMenu(adapterPosition, itemView)
             return true
         }
-
-
     }
 
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {

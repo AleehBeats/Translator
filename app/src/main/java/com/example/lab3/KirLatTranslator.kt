@@ -9,8 +9,8 @@ class KirLatTranslator {
     private var stringBuilder: StringBuilder = StringBuilder()
     private var receivedWord: String = ""
     private var processedWord: String = ""
-    fun kirLatTranslator(text: String): String {
-        receivedWord = text;
+    fun kirLatTranslation(text: String): String {
+        receivedWord = text
         slicedWord = receivedWord.toCharArray()
         for (i: Int in slicedWord.indices)
             when (slicedWord[i]) {

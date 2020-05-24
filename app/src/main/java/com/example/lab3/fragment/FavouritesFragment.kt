@@ -104,7 +104,7 @@ class FavouritesFragment : Fragment(), FavouritesAdapter.DeleteItemListener {
     }
 
     private fun addingNewMessage() {
-        favouriteMessage = sharedPreferencesConfig.extractingMessage()
+        favouriteMessage = sharedPreferencesConfig.extractingFavouriteMessage()
         if (favouriteMessage.requestedMessage != "") {
             favouriteMessageList.add(favouriteMessage)
             recyclerViewAdapter.notifyDataSetChanged()

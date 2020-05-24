@@ -10,19 +10,21 @@ import com.google.gson.reflect.TypeToken
 import java.lang.reflect.Type
 import java.nio.channels.SelectableChannel
 
-class SharedPreferencesConfig(private val context: Context){
+class SharedPreferencesConfig(private val context: Context) {
     private var sharedPreferences: SharedPreferences = context.getSharedPreferences(
         context.getString(R.string.shared_preferences),
         Context.MODE_PRIVATE
     )!!
     private val gson = Gson()
     private var jsonString = ""
-    private lateinit var selectedMessage:FavouriteMessageSample
+    private lateinit var editor: SharedPreferences.Editor
+    private lateinit var type: Type
+    private lateinit var responseMessage: MessageSample
     fun savingKirLatMessages(list: MutableList<MessageSample>) {
-        val editor = sharedPreferences.edit()
+        editor = sharedPreferences.edit()
         jsonString = gson.toJson(list)
-        editor?.putString(context.getString(R.string.kirlat_messages), jsonString)
-        editor?.apply()
+        editor.putString(context.getString(R.string.kirlat_messages), jsonString)
+        editor.apply()
     }
 
     fun extractingKirLatMessages(): MutableList<MessageSample> {
@@ -30,7 +32,7 @@ class SharedPreferencesConfig(private val context: Context){
             context.getString(R.string.kirlat_messages),
             DEFAULT_MESSAGE
         ).toString()
-        val type: Type = object : TypeToken<MutableList<MessageSample>>() {}.type
+        type = object : TypeToken<MutableList<MessageSample>>() {}.type
         var messageList = gson.fromJson<MutableList<MessageSample>>(jsonString, type)
         if (messageList == null) {
             messageList = mutableListOf()
@@ -39,10 +41,10 @@ class SharedPreferencesConfig(private val context: Context){
     }
 
     fun savingFavouriteMessages(list: MutableList<FavouriteMessageSample>) {
-        val editor = sharedPreferences.edit()
+        editor = sharedPreferences.edit()
         jsonString = gson.toJson(list)
-        editor?.putString(context.getString(R.string.favourite_messages), jsonString)
-        editor?.apply()
+        editor.putString(context.getString(R.string.favourite_messages), jsonString)
+        editor.apply()
     }
 
     fun extractingFavouriteMessages(): MutableList<FavouriteMessageSample> {
@@ -50,7 +52,7 @@ class SharedPreferencesConfig(private val context: Context){
             context.getString(R.string.favourite_messages),
             DEFAULT_MESSAGE
         ).toString()
-        val type: Type = object : TypeToken<MutableList<FavouriteMessageSample>>() {}.type
+        type = object : TypeToken<MutableList<FavouriteMessageSample>>() {}.type
         var favouriteMessageList =
             gson.fromJson<MutableList<FavouriteMessageSample>>(jsonString, type)
         if (favouriteMessageList == null) {
@@ -59,29 +61,29 @@ class SharedPreferencesConfig(private val context: Context){
         return favouriteMessageList
     }
 
-    fun savingMessage(requestMessage: MessageSample, responseMessage: MessageSample) {
-        val editor = sharedPreferences.edit()
+    fun savingFavouriteMessage(requestMessage: MessageSample, responseMessage: MessageSample) {
+        editor = sharedPreferences.edit()
         val requestMessageString = requestMessage.messageString
         val responseMessageString = responseMessage.messageString
         val favouriteMessageSample =
             FavouriteMessageSample(requestMessageString, responseMessageString)
         jsonString = gson.toJson(favouriteMessageSample)
-        editor?.putString(context.getString(R.string.selected_message), jsonString)
-        editor?.apply()
+        editor.putString(context.getString(R.string.selected_message), jsonString)
+        editor.apply()
     }
 
-    fun extractingMessage(): FavouriteMessageSample {
-        if (sharedPreferences.contains(context.getString(R.string.selected_message))){
+    fun extractingFavouriteMessage(): FavouriteMessageSample {
+        val selectedMessage: FavouriteMessageSample
+        if (sharedPreferences.contains(context.getString(R.string.selected_message))) {
             jsonString = sharedPreferences.getString(
                 context.getString(R.string.selected_message),
                 DEFAULT_MESSAGE
             ).toString()
             sharedPreferences.edit().remove(context.getString(R.string.selected_message)).apply()
-            val type: Type = object : TypeToken<FavouriteMessageSample>() {}.type
+            type = object : TypeToken<FavouriteMessageSample>() {}.type
             selectedMessage = gson.fromJson(jsonString, type)
-        }
-        else{
-            selectedMessage = FavouriteMessageSample("","")
+        } else {
+            selectedMessage = FavouriteMessageSample("", "")
         }
         return selectedMessage
     }

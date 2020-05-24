@@ -6,6 +6,7 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
+import android.os.Message
 import android.util.Log
 import android.view.*
 import android.widget.EditText
@@ -18,10 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.MaterialDialog
-import com.example.lab3.KirLatTranslator
-import com.example.lab3.MessageItemDecoration
-import com.example.lab3.R
-import com.example.lab3.SharedPreferencesConfig
+import com.example.lab3.*
 import com.example.lab3.adapters.RecyclerViewAdapter
 import com.example.lab3.message_samples.MessageSample
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -30,12 +28,10 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 class KirLatFragment : Fragment(), RecyclerViewAdapter.MessageClickListener,
     PopupMenu.OnMenuItemClickListener {
     private var messageRequest: String = ""
-    private var messageResponse: String = ""
     private var messageString: String = ""
     private var messageId: Int = 0
     private var textEraser: String = ""
 
-    private var kirLatTranslator: KirLatTranslator = KirLatTranslator()
     private lateinit var sendImage: ImageView
     private lateinit var inputMessage: EditText
     private lateinit var recyclerView: RecyclerView
@@ -44,9 +40,8 @@ class KirLatFragment : Fragment(), RecyclerViewAdapter.MessageClickListener,
 
     private lateinit var layoutManager: LinearLayoutManager
     private lateinit var messageSampleList: MutableList<MessageSample>
-    private lateinit var messageSample: MessageSample
-
     private lateinit var sharedPreferencesConfig: SharedPreferencesConfig
+    private var translationThread: TranslationThread? = null
     private var lastVisibleItem = 0
     private var itemPosition = 0
     private val scrollListener = object : RecyclerView.OnScrollListener() {
@@ -78,6 +73,7 @@ class KirLatFragment : Fragment(), RecyclerViewAdapter.MessageClickListener,
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        translationThread = TranslationThread(this)
         sharedPreferencesConfig = context?.let { SharedPreferencesConfig(it) }!!
         messageSampleList = sharedPreferencesConfig.extractingKirLatMessages()
         bindViews(view)
@@ -96,6 +92,8 @@ class KirLatFragment : Fragment(), RecyclerViewAdapter.MessageClickListener,
 
     override fun onDestroy() {
         sharedPreferencesConfig.savingKirLatMessages(messageSampleList)
+        translationThread?.removeCallbacksAndMessages(null)
+        translationThread = null
         super.onDestroy()
     }
 
@@ -151,7 +149,7 @@ class KirLatFragment : Fragment(), RecyclerViewAdapter.MessageClickListener,
         sendImage.setOnClickListener {
             if (inputMessage.text.isNotEmpty()) {
                 creatingRequestMessage()
-                creatingResponseMessage()
+
             } else {
 
             }
@@ -165,12 +163,12 @@ class KirLatFragment : Fragment(), RecyclerViewAdapter.MessageClickListener,
 
     private fun addingToFavourites() {
         if (itemPosition % 2 == 0)
-            sharedPreferencesConfig.savingMessage(
+            sharedPreferencesConfig.savingFavouriteMessage(
                 messageSampleList[itemPosition],
                 messageSampleList[itemPosition + 1]
             )
         else {
-            sharedPreferencesConfig.savingMessage(
+            sharedPreferencesConfig.savingFavouriteMessage(
                 messageSampleList[itemPosition - 1],
                 messageSampleList[itemPosition]
             )
@@ -215,23 +213,21 @@ class KirLatFragment : Fragment(), RecyclerViewAdapter.MessageClickListener,
 
 
     private fun creatingRequestMessage() {
-        messageId++
         messageString = inputMessage.text.toString()
         messageRequest = messageString
-        sendingMessageToAdapter(messageString, messageId)
+        val requestMessage = MessageSample(messageId, messageString)
+        sendingMessageToAdapter(requestMessage)
+        translatingMessage(requestMessage)
         inputMessage.setText(textEraser)
     }
 
-    private fun creatingResponseMessage() {
-        messageId++
-        messageString = kirLatTranslator.kirLatTranslator(messageString)
-        messageResponse = messageString
-        sendingMessageToAdapter(messageString, messageId)
+    private fun translatingMessage(requestMessage: MessageSample) {
+        val msg = Message()
+        msg.obj = requestMessage
+        translationThread?.sendMessage(msg)
     }
 
-    private fun sendingMessageToAdapter(string: String, id: Int) {
-        messageSample =
-            MessageSample(id, string)
+    fun sendingMessageToAdapter(messageSample: MessageSample) {
         messageSampleList.add(messageSample)
         recyclerViewAdapter.notifyDataSetChanged()
     }

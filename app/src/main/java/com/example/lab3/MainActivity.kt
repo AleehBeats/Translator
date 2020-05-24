@@ -3,6 +3,7 @@ package com.example.lab3
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.widget.ImageView
@@ -59,6 +60,7 @@ class MainActivity : AppCompatActivity() {
         toolbar = findViewById(R.id.toolbar)
         title = findViewById(R.id.name)
         themeModeImage = findViewById(R.id.themeModeImage)
+        toolbar.title=""
         themeModeImage.setOnClickListener {
             if(sharedPreferences.contains(getString(R.string.boolean_theme))){
                 darkThemeMode=sharedPreferences.getBoolean(getString(R.string.boolean_theme),false)
@@ -86,15 +88,9 @@ class MainActivity : AppCompatActivity() {
         finish()
         startActivity(intent)
     }
+
+
     private fun hidingFragments() {
-//        fragmentManager.beginTransaction().add(R.id.frame, favouritesFragment)
-//            .hide(favouritesFragment).commit()
-//        fragmentManager.beginTransaction().add(R.id.frame, profileFragment).hide(profileFragment)
-//            .commit()
-//        fragmentManager.beginTransaction().add(R.id.frame, searchFragment).hide(searchFragment)
-//            .commit()
-//        fragmentManager.beginTransaction().add(R.id.frame, translateFragment)
-//            .hide(translateFragment).commit()
         fragmentManager.beginTransaction().add(R.id.frame, kirLatFragment).commit()
         bottomNavigation.selectedItemId = R.id.kirlat
         bottomNavigation.setOnNavigationItemSelectedListener(navListener)
