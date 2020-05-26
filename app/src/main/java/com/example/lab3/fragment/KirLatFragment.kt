@@ -1,5 +1,6 @@
 package com.example.lab3.fragment
 
+import android.R.attr.data
 import android.R.attr.label
 import android.content.ClipData
 import android.content.ClipboardManager
@@ -7,11 +8,13 @@ import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.os.Message
+import android.os.SystemClock
 import android.util.Log
 import android.view.*
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.PopupMenu
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
@@ -23,6 +26,11 @@ import com.example.lab3.*
 import com.example.lab3.adapters.RecyclerViewAdapter
 import com.example.lab3.message_samples.MessageSample
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import io.reactivex.Observable
+import io.reactivex.Scheduler
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
+import java.util.*
 
 
 class KirLatFragment : Fragment(), RecyclerViewAdapter.MessageClickListener,
@@ -41,7 +49,7 @@ class KirLatFragment : Fragment(), RecyclerViewAdapter.MessageClickListener,
     private lateinit var layoutManager: LinearLayoutManager
     private lateinit var messageSampleList: MutableList<MessageSample>
     private lateinit var sharedPreferencesConfig: SharedPreferencesConfig
-    private var translationThread: TranslationThread? = null
+    private lateinit var kirLatTranslator: KirLatTranslator
     private var lastVisibleItem = 0
     private var itemPosition = 0
     private val scrollListener = object : RecyclerView.OnScrollListener() {
@@ -73,7 +81,6 @@ class KirLatFragment : Fragment(), RecyclerViewAdapter.MessageClickListener,
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        translationThread = TranslationThread(this)
         sharedPreferencesConfig = context?.let { SharedPreferencesConfig(it) }!!
         messageSampleList = sharedPreferencesConfig.extractingKirLatMessages()
         bindViews(view)
@@ -92,8 +99,6 @@ class KirLatFragment : Fragment(), RecyclerViewAdapter.MessageClickListener,
 
     override fun onDestroy() {
         sharedPreferencesConfig.savingKirLatMessages(messageSampleList)
-        translationThread?.removeCallbacksAndMessages(null)
-        translationThread = null
         super.onDestroy()
     }
 
@@ -211,23 +216,36 @@ class KirLatFragment : Fragment(), RecyclerViewAdapter.MessageClickListener,
         layoutManager.startSmoothScroll(smoothScroller)
     }
 
+    private fun dataSource(requestMessage: MessageSample): Observable<MessageSample> {
+        return Observable.create { emitter ->
+            kirLatTranslator = KirLatTranslator()
+            val responseMessageString =
+                kirLatTranslator.kirLatTranslation(requestMessage.messageString)
+            val id = requestMessage.id++
+            val responseMessage = MessageSample(id, responseMessageString)
+            emitter.onNext(responseMessage)
+        }
+    }
 
     private fun creatingRequestMessage() {
         messageString = inputMessage.text.toString()
         messageRequest = messageString
         val requestMessage = MessageSample(messageId, messageString)
+        creatingResponseMessage(requestMessage)
         sendingMessageToAdapter(requestMessage)
-        translatingMessage(requestMessage)
         inputMessage.setText(textEraser)
     }
 
-    private fun translatingMessage(requestMessage: MessageSample) {
-        val msg = Message()
-        msg.obj = requestMessage
-        translationThread?.sendMessage(msg)
+    private fun creatingResponseMessage(requestMessage: MessageSample) {
+        val disposable = dataSource(requestMessage).subscribeOn(Schedulers.newThread())
+            .observeOn(AndroidSchedulers.mainThread()).subscribe({
+                sendingMessageToAdapter(it)
+            },{
+                Toast.makeText(context, "Message has not delivered", Toast.LENGTH_SHORT).show()
+            })
     }
 
-    fun sendingMessageToAdapter(messageSample: MessageSample) {
+    private fun sendingMessageToAdapter(messageSample: MessageSample) {
         messageSampleList.add(messageSample)
         recyclerViewAdapter.notifyDataSetChanged()
     }

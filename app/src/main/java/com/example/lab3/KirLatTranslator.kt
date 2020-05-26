@@ -1,14 +1,22 @@
 package com.example.lab3
 
+import android.os.Message
 import com.afollestad.materialdialogs.MaterialDialog
+import com.example.lab3.message_samples.MessageSample
+import io.reactivex.Observable
+import io.reactivex.Scheduler
+import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 import java.lang.StringBuilder
 
-class KirLatTranslator {
+class KirLatTranslator() {
     private lateinit var slicedWord: CharArray
     private lateinit var materialDialogBuilder: MaterialDialog.Builder
+    private lateinit var responseMessage: MessageSample
     private var stringBuilder: StringBuilder = StringBuilder()
     private var receivedWord: String = ""
     private var processedWord: String = ""
+
     fun kirLatTranslation(text: String): String {
         receivedWord = text
         slicedWord = receivedWord.toCharArray()

@@ -22,11 +22,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-    compileOptions{
+    compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-    kotlinOptions{
+    kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
 }
@@ -43,15 +43,22 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation 'com.google.android.material:material:1.1.0'
+    
     //Gson
     implementation 'com.google.code.gson:gson:2.8.6'
+
     //PopUp Window
     implementation('com.github.afollestad.material-dialogs:core:0.8.5.4@aar') {
         transitive = true
     }
+
+    //RxJava
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.19'
+
     //Room
-    def room_version="2.2.5"
+    def room_version = "2.2.5"
     implementation "androidx.room:room-runtime:$room_version"
-    annotationProcessor"androidx.room:room-compiler:$room_version"
-    kapt"androidx.room:room-compiler:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
 }
