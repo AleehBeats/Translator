@@ -1,4 +1,4 @@
-package com.example.lab3
+package com.example.lab3.utils
 
 import android.graphics.Rect
 import android.view.View

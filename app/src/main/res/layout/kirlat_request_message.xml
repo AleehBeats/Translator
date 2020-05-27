@@ -14,10 +14,10 @@
         android:layout_marginEnd="5dp"
         android:layout_marginBottom="5dp"
         android:background="@drawable/rounded_corner"
-        android:backgroundTint="?attr/colorRequestMessage"
+        android:backgroundTint="?attr/colorKirLatRequestMessage"
         android:elevation="10dp"
         android:fontFamily="@font/montserrat"
-        android:maxWidth="660dp"
+        android:maxWidth="363dp"
         android:padding="10dp"
         android:shadowColor="#000000"
         android:text="Message"
@@ -26,5 +26,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:backgroundTint="?attr/colorRequestMessage" />
+        tools:backgroundTint="?attr/colorKirLatRequestMessage" />
 </androidx.constraintlayout.widget.ConstraintLayout>

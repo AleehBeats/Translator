@@ -1,14 +1,7 @@
 package com.example.lab3.fragment
 
-import android.R.attr.data
-import android.R.attr.label
-import android.content.ClipData
-import android.content.ClipboardManager
-import android.content.Context
 import android.os.Build
 import android.os.Bundle
-import android.os.Message
-import android.os.SystemClock
 import android.util.Log
 import android.view.*
 import android.widget.EditText
@@ -16,21 +9,20 @@ import android.widget.ImageView
 import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.annotation.RequiresApi
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
-import com.afollestad.materialdialogs.MaterialDialog
 import com.example.lab3.*
 import com.example.lab3.adapters.RecyclerViewAdapter
 import com.example.lab3.message_samples.MessageSample
+import com.example.lab3.utils.KirLatTranslator
+import com.example.lab3.utils.MessageItemDecoration
+import com.example.lab3.utils.SharedPreferencesConfig
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import io.reactivex.Observable
-import io.reactivex.Scheduler
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import java.util.*
 
 
 class KirLatFragment : Fragment(), RecyclerViewAdapter.MessageClickListener,
@@ -81,7 +73,12 @@ class KirLatFragment : Fragment(), RecyclerViewAdapter.MessageClickListener,
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        sharedPreferencesConfig = context?.let { SharedPreferencesConfig(it) }!!
+        setHasOptionsMenu(true)
+        sharedPreferencesConfig = context?.let {
+            SharedPreferencesConfig(
+                it
+            )
+        }!!
         messageSampleList = sharedPreferencesConfig.extractingKirLatMessages()
         bindViews(view)
         setAdapter()
@@ -122,7 +119,10 @@ class KirLatFragment : Fragment(), RecyclerViewAdapter.MessageClickListener,
             popup.show()
         }
     }
-
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.action_bar, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
     override fun onMenuItemClick(item: MenuItem?): Boolean {
         when (item?.itemId) {
             R.id.chCopy -> {
@@ -182,10 +182,16 @@ class KirLatFragment : Fragment(), RecyclerViewAdapter.MessageClickListener,
 
     private fun deletingKirLatPairs() {
         if (itemPosition % 2 == 0) {
-            messageSampleList.removeAt(itemPosition)
-            recyclerViewAdapter.notifyItemRemoved(itemPosition)
-            messageSampleList.removeAt(itemPosition)
-            recyclerViewAdapter.notifyItemRemoved(itemPosition)
+            if(itemPosition+1==messageSampleList.size){
+                messageSampleList.removeAt(itemPosition)
+                recyclerViewAdapter.notifyItemRemoved(itemPosition)
+            }
+            else {
+                messageSampleList.removeAt(itemPosition)
+                recyclerViewAdapter.notifyItemRemoved(itemPosition)
+                messageSampleList.removeAt(itemPosition)
+                recyclerViewAdapter.notifyItemRemoved(itemPosition)
+            }
         } else {
             messageSampleList.removeAt(itemPosition)
             recyclerViewAdapter.notifyItemRemoved(itemPosition)

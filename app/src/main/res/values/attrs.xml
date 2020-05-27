@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <attr name="colorBackground" format="color|reference"/>
-    <attr name="colorRequestMessage" format="color|reference"/>
-    <attr name="colorResponseMessage" format="color|reference"/>
+    <attr name="colorKirLatRequestMessage" format="color|reference"/>
+    <attr name="colorKirLatResponseMessage" format="color|reference"/>
     <attr name="colorSelectedIcons" format="color|reference"/>
     <attr name="colorUnselectedIcons" format="color|reference"/>
     <attr name="colorText" format="color|reference"/>
@@ -13,6 +13,8 @@
     <attr name="colorPopUpMenuIcons" format="color|reference"/>
     <attr name="colorPlayButtonCircle" format="color|reference"/>
     <attr name="colorPlayButtonTriangle" format="color|reference"/>
+    <attr name="colorTranslateRequestMessage" format="color|reference"/>
+    <attr name="colorTranslateResponseMessage" format="color|reference"/>
     <declare-styleable name="VideoPlayerView">
         <attr name="isSeekBarVisible" format="boolean"/>
         <attr name="isPlayButtonVisible" format="boolean"/>

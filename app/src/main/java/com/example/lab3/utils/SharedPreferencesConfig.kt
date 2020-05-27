@@ -1,14 +1,13 @@
-package com.example.lab3
+package com.example.lab3.utils
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.os.Message
+import com.example.lab3.R
 import com.example.lab3.message_samples.FavouriteMessageSample
 import com.example.lab3.message_samples.MessageSample
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.lang.reflect.Type
-import java.nio.channels.SelectableChannel
 
 class SharedPreferencesConfig(private val context: Context) {
     private var sharedPreferences: SharedPreferences = context.getSharedPreferences(
@@ -20,6 +19,26 @@ class SharedPreferencesConfig(private val context: Context) {
     private lateinit var editor: SharedPreferences.Editor
     private lateinit var type: Type
     private lateinit var responseMessage: MessageSample
+    fun savingTranslatedMessages(list: MutableList<MessageSample>) {
+        editor = sharedPreferences.edit()
+        jsonString = gson.toJson(list)
+        editor.putString(context.getString(R.string.saving_translated_messages), jsonString)
+        editor.apply()
+    }
+
+    fun extractingTranslatedMessages(): MutableList<MessageSample> {
+        jsonString = sharedPreferences.getString(
+            context.getString(R.string.saving_translated_messages),
+            DEFAULT_MESSAGE
+        ).toString()
+        type = object : TypeToken<MutableList<MessageSample>>() {}.type
+        var messageList = gson.fromJson<MutableList<MessageSample>>(jsonString, type)
+        if (messageList == null) {
+            messageList = mutableListOf()
+        }
+        return messageList
+    }
+
     fun savingKirLatMessages(list: MutableList<MessageSample>) {
         editor = sharedPreferences.edit()
         jsonString = gson.toJson(list)

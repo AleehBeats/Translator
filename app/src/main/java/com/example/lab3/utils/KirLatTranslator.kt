@@ -1,12 +1,7 @@
-package com.example.lab3
+package com.example.lab3.utils
 
-import android.os.Message
 import com.afollestad.materialdialogs.MaterialDialog
 import com.example.lab3.message_samples.MessageSample
-import io.reactivex.Observable
-import io.reactivex.Scheduler
-import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
 import java.lang.StringBuilder
 
 class KirLatTranslator() {

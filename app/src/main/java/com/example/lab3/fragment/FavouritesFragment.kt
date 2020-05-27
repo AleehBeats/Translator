@@ -1,17 +1,14 @@
 package com.example.lab3.fragment
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
-import com.example.lab3.KirLatTranslator
 import com.example.lab3.R
-import com.example.lab3.SharedPreferencesConfig
+import com.example.lab3.utils.SharedPreferencesConfig
 import com.example.lab3.adapters.FavouritesAdapter
 import com.example.lab3.message_samples.FavouriteMessageSample
 import com.google.android.material.snackbar.Snackbar
@@ -55,13 +52,24 @@ class FavouritesFragment : Fragment(), FavouritesAdapter.DeleteItemListener {
         return inflater.inflate(R.layout.fragment_favourites, container, false)
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        sharedPreferencesConfig = context?.let { SharedPreferencesConfig(it) }!!
+        setHasOptionsMenu(true);
+        sharedPreferencesConfig = context?.let {
+            SharedPreferencesConfig(
+                it
+            )
+        }!!
         favouriteMessageList = sharedPreferencesConfig.extractingFavouriteMessages()
         bindViews(view)
         setAdapter()
         addingNewMessage()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.action_bar, menu)
+        super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun deleteItem(position: Int, favouriteMessageSample: FavouriteMessageSample?) {

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".activities.PatientSelectionActivity">
+    <item
+        android:id="@+id/main"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/three_dots"
+        android:title="">
+        <menu>
+            <item android:id="@+id/chRusEng"
+                android:title="@string/ru_en"
+                app:showAsAction="never" />
+            <item android:id="@+id/chEngRus"
+                android:title="@string/en_ru"
+                app:showAsAction="never" />
+        </menu>
+    </item>
+</menu>

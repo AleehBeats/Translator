@@ -5,8 +5,8 @@
     <color name="darkColorAccent">#DB7517</color>
     <color name="darkColorLabel">#FFFFFF</color>
     <color name="darkColorTop">#323D4E</color>
-    <color name="darkColorMessageResponse">#323D4E</color>
-    <color name="darkColorMessageRequest">#074A46</color>
+    <color name="darkColorKirLatMessageResponse">#323D4E</color>
+    <color name="darkColorKirLatMessageRequest">#074A46</color>
     <color name="darkColorText">#FFFFFF</color>
     <color name="darkColorSelectedIcon">#DB7517</color>
     <color name="darkColorUnselectedIcon">#FFFFFF</color>
@@ -15,4 +15,6 @@
     <color name="darkColorPopupMenuIcons">#FFFFFF</color>
     <color name="darkColorPlayButtonCircle">#323D4E</color>
     <color name="darkColorPlayButtonTriangle">#DB7517</color>
+    <color name="darkColorTranslateMessageRequest">#1789DB</color>
+    <color name="darkColorTranslateMessageResponse">#323D4E</color>
 </resources>

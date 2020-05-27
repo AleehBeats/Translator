@@ -24,4 +24,7 @@
     <string name="popup_share">Bólіsý</string>
     <string name="popup_delete">Óshіrý</string>
     <string name="popup_add_favourites">Unaǵandar tіzіmіne qosý</string>
+    <string name="ru_en">Рус-Eng</string>
+    <string name="en_ru">Eng-Рус</string>
+    <string name="saving_translated_messages">saving translated messages</string>
 </resources>

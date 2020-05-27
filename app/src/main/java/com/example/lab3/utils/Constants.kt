@@ -1,4 +1,4 @@
-package com.example.lab3
+package com.example.lab3.utils
 
 const val REQUEST_MESSAGE_VIEW_TYPE = 0
 const val DEFAULT_INT_VALUE=0

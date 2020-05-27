@@ -7,18 +7,21 @@
         <item name="colorPrimaryDark">@color/lightColorPrimaryDark</item>
         <item name="colorPrimary">@color/lightColorPrimary</item>
         <item name="colorBackground">@drawable/lightbackground</item>
-        <item name="colorRequestMessage">@color/lightColorMessageRequest</item>
-        <item name="colorResponseMessage">@color/lightColorMessageResponse</item>
+        <item name="colorKirLatRequestMessage">@color/lightColorKirLatMessageRequest</item>
+        <item name="colorKirLatResponseMessage">@color/lightColorKirLatMessageResponse</item>
         <item name="colorSelectedIcons">@color/lightColorSelectedIcon</item>
         <item name="colorUnselectedIcons">@color/lightColorUnselectedIcon</item>
         <item name="colorText">@color/lightColorText</item>
         <item name="colorLabel">@color/lightColorLabel</item>
         <item name="colorLogo">@drawable/ic_luna</item>
         <item name="colorFavouriteItem">@color/lightColorFavouriteItem</item>
-        <item name="colorFavouriteFragmentBackground">@color/lightColorFavouriteFragmentBackground</item>
+        <item name="colorFavouriteFragmentBackground">@color/lightColorFavouriteFragmentBackground
+        </item>
         <item name="colorPopUpMenuIcons">@color/lightColorPopupMenuIcons</item>
         <item name="colorPlayButtonTriangle">@color/lightColorPlayButtonTriangle</item>
         <item name="colorPlayButtonCircle">@color/lightColorPlayButtonCircle</item>
+        <item name="colorTranslateRequestMessage">@color/lightColorTranslateMessageRequest</item>
+        <item name="colorTranslateResponseMessage">@color/lightColorTranslateMessageResponse</item>
         <item name="android:popupMenuStyle">@style/LightPopupMenu</item>
         <item name="android:fontFamily">@font/montserrat</item>
     </style>
@@ -28,34 +31,48 @@
         <item name="colorPrimaryDark">@color/darkColorPrimaryDark</item>
         <item name="colorPrimary">@color/darkColorPrimary</item>
         <item name="colorBackground">@drawable/darkbackground</item>
-        <item name="colorRequestMessage">@color/darkColorMessageRequest</item>
-        <item name="colorResponseMessage">@color/darkColorMessageResponse</item>
+        <item name="colorKirLatRequestMessage">@color/darkColorKirLatMessageRequest</item>
+        <item name="colorKirLatResponseMessage">@color/darkColorKirLatMessageResponse</item>
         <item name="colorSelectedIcons">@color/darkColorSelectedIcon</item>
         <item name="colorUnselectedIcons">@color/darkColorUnselectedIcon</item>
         <item name="colorText">@color/darkColorText</item>
         <item name="colorLabel">@color/darkColorLabel</item>
         <item name="colorLogo">@drawable/ic_sun</item>
         <item name="colorFavouriteItem">@color/darkColorFavouriteItem</item>
-        <item name="colorFavouriteFragmentBackground">@color/darkColorFavouriteFragmentBackground</item>
+        <item name="colorFavouriteFragmentBackground">@color/darkColorFavouriteFragmentBackground
+        </item>
         <item name="colorPopUpMenuIcons">@color/darkColorPopupMenuIcons</item>
         <item name="colorPlayButtonTriangle">@color/darkColorPlayButtonTriangle</item>
         <item name="colorPlayButtonCircle">@color/darkColorPlayButtonCircle</item>
+        <item name="colorTranslateRequestMessage">@color/darkColorTranslateMessageRequest</item>
+        <item name="colorTranslateResponseMessage">@color/darkColorTranslateMessageResponse</item>
         <item name="android:popupMenuStyle">@style/DarkPopupMenu</item>
         <item name="android:textColor">@color/darkColorText</item>
         <item name="android:fontFamily">@font/montserrat</item>
     </style>
 
-    <style name="ToolbarTheme" parent="ThemeOverlay.AppCompat.Light">
+    <style name="ToolbarTheme">
         <item name="android:fontFamily">@font/montserrat</item>
-        <item name="android:itemTextAppearance">@color/darkColorMessageRequest</item>
+        <item name="android:itemTextAppearance">@color/darkColorKirLatMessageRequest</item>
         <item name="overlapAnchor">false</item>
         <item name="android:dropDownVerticalOffset">?attr/actionBarSize</item>
         <item name="android:background">?attr/colorPrimary</item>
         <item name="android:textColor">?attr/colorText</item>
     </style>
+
+    <style name="TranslateMenu">
+        <item name="android:fontFamily">@font/montserrat</item>
+        <item name="android:itemTextAppearance">@color/darkColorKirLatMessageRequest</item>
+        <item name="android:textColor">?attr/colorText</item>
+        <item name="overlapAnchor">false</item>
+        <item name="android:dropDownVerticalOffset">?attr/actionBarSize</item>
+        <item name="android:background">?attr/colorPrimary</item>
+    </style>
+
     <style name="DarkPopupMenu" parent="@android:style/Widget.PopupMenu">
         <item name="android:popupBackground">@color/darkColorPrimary</item>
     </style>
+
     <style name="LightPopupMenu" parent="@android:style/Widget.PopupMenu">
         <item name="android:popupBackground">@color/lightColorPrimary</item>
     </style>
