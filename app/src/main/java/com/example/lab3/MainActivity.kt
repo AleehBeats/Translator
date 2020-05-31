@@ -19,6 +19,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 class MainActivity : AppCompatActivity() {
     private val fragmentManager: FragmentManager = supportFragmentManager
     private lateinit var bottomNavigation: BottomNavigationView
+    //text
     private lateinit var toolbar: Toolbar
     private lateinit var title: TextView
     private val kirLatFragment = KirLatFragment()
