@@ -15,6 +15,8 @@ import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lab3.*
 import com.example.lab3.adapters.RecyclerViewAdapter
+import com.example.lab3.databases.MessageDao
+import com.example.lab3.databases.MessageDatabase
 import com.example.lab3.message_samples.MessageSample
 import com.example.lab3.utils.KirLatTranslator
 import com.example.lab3.utils.MessageItemDecoration
@@ -23,13 +25,14 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.*
+import kotlin.coroutines.CoroutineContext
 
 
 class KirLatFragment : Fragment(), RecyclerViewAdapter.MessageClickListener,
-    PopupMenu.OnMenuItemClickListener {
-    private var messageRequest: String = ""
+    PopupMenu.OnMenuItemClickListener, CoroutineScope {
     private var messageString: String = ""
-    private var messageId: Int = 0
+    private var messageId: Int = -1
     private var textEraser: String = ""
 
     private lateinit var sendImage: ImageView
@@ -44,13 +47,15 @@ class KirLatFragment : Fragment(), RecyclerViewAdapter.MessageClickListener,
     private lateinit var kirLatTranslator: KirLatTranslator
     private var lastVisibleItem = 0
     private var itemPosition = 0
+    private val job = Job()
+    private var messageDao: MessageDao? = null
     private val scrollListener = object : RecyclerView.OnScrollListener() {
         override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
             when (newState) {
                 RecyclerView.SCROLL_STATE_DRAGGING -> floatingActionButton.hide()
                 RecyclerView.SCROLL_STATE_IDLE -> {
                     lastVisibleItem = layoutManager.findLastCompletelyVisibleItemPosition()
-                    if (lastVisibleItem == messageSampleList.size - 1) {
+                    if (lastVisibleItem == recyclerViewAdapter.messageSamples?.size?.minus(1) ?: 0) {
                         floatingActionButton.hide()
                     } else {
                         floatingActionButton.show()
@@ -74,12 +79,8 @@ class KirLatFragment : Fragment(), RecyclerViewAdapter.MessageClickListener,
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
-        sharedPreferencesConfig = context?.let {
-            SharedPreferencesConfig(
-                it
-            )
-        }!!
-        messageSampleList = sharedPreferencesConfig.extractingKirLatMessages()
+        messageDao = context?.let { MessageDatabase.getDatabase(it).messageDao() }
+        extractingMessages()
         bindViews(view)
         setAdapter()
     }
@@ -95,9 +96,12 @@ class KirLatFragment : Fragment(), RecyclerViewAdapter.MessageClickListener,
     }
 
     override fun onDestroy() {
-        sharedPreferencesConfig.savingKirLatMessages(messageSampleList)
+        recyclerViewAdapter.messageSamples?.toList()?.let { savingMessages(it) }
         super.onDestroy()
     }
+
+    override val coroutineContext: CoroutineContext
+        get() = Dispatchers.Main + job
 
     override fun showPopUpMenu(position: Int, itemView: View) {
         val popup = PopupMenu(context, itemView)
@@ -119,10 +123,12 @@ class KirLatFragment : Fragment(), RecyclerViewAdapter.MessageClickListener,
             popup.show()
         }
     }
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.action_bar, menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
+
     override fun onMenuItemClick(item: MenuItem?): Boolean {
         when (item?.itemId) {
             R.id.chCopy -> {
@@ -153,8 +159,8 @@ class KirLatFragment : Fragment(), RecyclerViewAdapter.MessageClickListener,
         recyclerView.layoutManager = layoutManager
         sendImage.setOnClickListener {
             if (inputMessage.text.isNotEmpty()) {
-                creatingRequestMessage()
-
+                creatingPairMessages()
+                extractingMessages()
             } else {
 
             }
@@ -182,20 +188,19 @@ class KirLatFragment : Fragment(), RecyclerViewAdapter.MessageClickListener,
 
     private fun deletingKirLatPairs() {
         if (itemPosition % 2 == 0) {
-            if(itemPosition+1==messageSampleList.size){
-                messageSampleList.removeAt(itemPosition)
+            if (itemPosition + 1 == recyclerViewAdapter.messageSamples?.size) {
+                recyclerViewAdapter.messageSamples?.removeAt(itemPosition)
                 recyclerViewAdapter.notifyItemRemoved(itemPosition)
-            }
-            else {
-                messageSampleList.removeAt(itemPosition)
+            } else {
+                recyclerViewAdapter.messageSamples?.removeAt(itemPosition)
                 recyclerViewAdapter.notifyItemRemoved(itemPosition)
-                messageSampleList.removeAt(itemPosition)
+                recyclerViewAdapter.messageSamples?.removeAt(itemPosition)
                 recyclerViewAdapter.notifyItemRemoved(itemPosition)
             }
         } else {
-            messageSampleList.removeAt(itemPosition)
+            recyclerViewAdapter.messageSamples?.removeAt(itemPosition)
             recyclerViewAdapter.notifyItemRemoved(itemPosition)
-            messageSampleList.removeAt(itemPosition - 1)
+            recyclerViewAdapter.messageSamples?.removeAt(itemPosition - 1)
             recyclerViewAdapter.notifyItemRemoved(itemPosition - 1)
         }
     }
@@ -203,12 +208,10 @@ class KirLatFragment : Fragment(), RecyclerViewAdapter.MessageClickListener,
     private fun setAdapter() {
         recyclerViewAdapter =
             RecyclerViewAdapter(
-                messageSampleList,
                 messageClickListener = this
             )
         recyclerView.adapter = recyclerViewAdapter
         recyclerView.setHasFixedSize(true)
-
     }
 
 
@@ -218,41 +221,55 @@ class KirLatFragment : Fragment(), RecyclerViewAdapter.MessageClickListener,
                 return SNAP_TO_END
             }
         }
-        smoothScroller.targetPosition = messageSampleList.size - 1
+        smoothScroller.targetPosition = recyclerViewAdapter.messageSamples?.size?.minus(1) ?: 0
         layoutManager.startSmoothScroll(smoothScroller)
     }
 
-    private fun dataSource(requestMessage: MessageSample): Observable<MessageSample> {
-        return Observable.create { emitter ->
-            kirLatTranslator = KirLatTranslator()
-            val responseMessageString =
-                kirLatTranslator.kirLatTranslation(requestMessage.messageString)
-            val id = requestMessage.id++
-            val responseMessage = MessageSample(id, responseMessageString)
-            emitter.onNext(responseMessage)
+    private fun extractingMessages() {
+        launch {
+            val list = withContext(Dispatchers.IO) { messageDao?.getAll() }
+            recyclerViewAdapter.messageSamples = list?.toMutableList()
+            recyclerViewAdapter.notifyDataSetChanged()
         }
     }
 
-    private fun creatingRequestMessage() {
+    private fun savingMessages(messages: List<MessageSample>) {
+        launch {
+            withContext(Dispatchers.IO) {
+                messageDao?.deleteAll()
+                messageDao?.insertAll(messages)
+            }
+        }
+    }
+
+    private fun sendingMessage(messageType: MessageType, messageString: String) {
+        launch {
+            when (messageType) {
+                MessageType.REQUEST -> {
+                    withContext(Dispatchers.IO) {
+                        messageId++
+                        val requestMessage = MessageSample(messageId, messageString)
+                        messageDao?.insertMessage(requestMessage)
+                    }
+                }
+                MessageType.RESPONSE -> {
+                    withContext(Dispatchers.IO) {
+                        kirLatTranslator = KirLatTranslator()
+                        messageId++
+                        val responseString =
+                            kirLatTranslator.kirLatTranslation(messageString)
+                        val responseMessage = MessageSample(messageId, responseString)
+                        messageDao?.insertMessage(responseMessage)
+                    }
+                }
+            }
+        }
+    }
+
+    private fun creatingPairMessages() {
         messageString = inputMessage.text.toString()
-        messageRequest = messageString
-        val requestMessage = MessageSample(messageId, messageString)
-        creatingResponseMessage(requestMessage)
-        sendingMessageToAdapter(requestMessage)
         inputMessage.setText(textEraser)
-    }
-
-    private fun creatingResponseMessage(requestMessage: MessageSample) {
-        val disposable = dataSource(requestMessage).subscribeOn(Schedulers.newThread())
-            .observeOn(AndroidSchedulers.mainThread()).subscribe({
-                sendingMessageToAdapter(it)
-            },{
-                Toast.makeText(context, "Message has not delivered", Toast.LENGTH_SHORT).show()
-            })
-    }
-
-    private fun sendingMessageToAdapter(messageSample: MessageSample) {
-        messageSampleList.add(messageSample)
-        recyclerViewAdapter.notifyDataSetChanged()
+        sendingMessage(MessageType.REQUEST, messageString)
+        sendingMessage(MessageType.RESPONSE, messageString)
     }
 }

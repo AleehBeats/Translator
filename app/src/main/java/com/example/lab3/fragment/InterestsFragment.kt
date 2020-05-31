@@ -7,10 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.lab3.MovieDatabase
+import com.example.lab3.databases.MovieDatabase
 import com.example.lab3.R
 import com.example.lab3.adapters.InterestsAdapter
-import kotlinx.android.synthetic.main.interests_item.*
 import kotlinx.android.synthetic.main.interests_item.view.*
 import kotlinx.android.synthetic.main.video_player_view.view.*
 

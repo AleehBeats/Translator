@@ -1,4 +1,4 @@
-package com.example.lab3
+package com.example.lab3.databases
 
 class MovieDatabase {
     val videoLinks:MutableList<String> = mutableListOf()

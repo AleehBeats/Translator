@@ -3,7 +3,7 @@ package com.example.lab3.message_samples
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "messages")
+@Entity(tableName = "messages_table")
 data class MessageSample(
     @PrimaryKey
     var id: Int,

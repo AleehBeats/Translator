@@ -11,7 +11,7 @@ import com.example.lab3.utils.REQUEST_MESSAGE_VIEW_TYPE
 import com.example.lab3.utils.RESPONSE_MESSAGE_VIEW_TYPE
 
 class RecyclerViewAdapter(
-    var messageSamples: MutableList<MessageSample>?,
+    var messageSamples: MutableList<MessageSample>?=null,
     val messageClickListener: MessageClickListener? = null
 ) : RecyclerView.Adapter<BaseViewHolder>() {
     private lateinit var messageView: View
