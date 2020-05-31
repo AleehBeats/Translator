@@ -18,7 +18,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
     private val fragmentManager: FragmentManager = supportFragmentManager
-
+    //test
     private lateinit var bottomNavigation: BottomNavigationView
     private lateinit var toolbar: Toolbar
     private lateinit var title: TextView
