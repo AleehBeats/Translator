@@ -20,6 +20,7 @@ class MainActivity : AppCompatActivity() {
     private val fragmentManager: FragmentManager = supportFragmentManager
     private lateinit var bottomNavigation: BottomNavigationView
     //te
+    //
     private lateinit var toolbar: Toolbar
     private lateinit var title: TextView
     private val kirLatFragment = KirLatFragment()
