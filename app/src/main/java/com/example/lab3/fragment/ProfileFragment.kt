@@ -62,7 +62,6 @@ class ProfileFragment : Fragment(), CoroutineScope {
             bindViewsSignIn(view)
         else {
             bindViewsSignOut(view)
-            signIn()
         }
     }
 
@@ -78,6 +77,11 @@ class ProfileFragment : Fragment(), CoroutineScope {
 
     private fun bindViewsSignOut(view: View) {
         signOutButton = view.findViewById(R.id.signOutButton)
+        val user = sharedPreferencesConfig.extractingUser()
+        name = user.username
+        email=user.email
+        image=user.uri?.toUri()
+        bindingData()
         signOutButton.setOnClickListener {
             signOut()
         }
@@ -125,6 +129,7 @@ class ProfileFragment : Fragment(), CoroutineScope {
                                         email = profile.email
                                         image = profile.photoUrl
                                         user = User(name, email, image.toString())
+                                        sharedPreferencesConfig.savingUser(user)
                                         bindingData()
 //                                    Glide.with(this).load(user.photoUrl).into(avatarImageView)
                                     }
