@@ -27,4 +27,7 @@
     <string name="ru_en">Рус-Eng</string>
     <string name="en_ru">Eng-Рус</string>
     <string name="saving_translated_messages">saving translated messages</string>
+    <string name="layout">layout</string>
+    <string name="exit">Шығу</string>
+    <string name="saving_user">user</string>
 </resources>

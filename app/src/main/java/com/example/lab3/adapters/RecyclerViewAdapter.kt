@@ -5,7 +5,7 @@ import android.view.*
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lab3.*
-import com.example.lab3.message_samples.MessageSample
+import com.example.lab3.models.MessageSample
 import com.example.lab3.utils.BaseViewHolder
 import com.example.lab3.utils.REQUEST_MESSAGE_VIEW_TYPE
 import com.example.lab3.utils.RESPONSE_MESSAGE_VIEW_TYPE

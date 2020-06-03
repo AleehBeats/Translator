@@ -1,6 +1,6 @@
 package com.example.lab3
 
-import com.example.lab3.message_samples.TranslatedMessage
+import com.example.lab3.models.TranslatedMessage
 import io.reactivex.Single
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory

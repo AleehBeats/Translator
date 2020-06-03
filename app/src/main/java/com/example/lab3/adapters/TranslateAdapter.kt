@@ -10,7 +10,7 @@ import com.example.lab3.utils.BaseViewHolder
 import com.example.lab3.R
 import com.example.lab3.utils.REQUEST_MESSAGE_VIEW_TYPE
 import com.example.lab3.utils.RESPONSE_MESSAGE_VIEW_TYPE
-import com.example.lab3.message_samples.MessageSample
+import com.example.lab3.models.MessageSample
 
 class TranslateAdapter(
     var messageSamples: MutableList<MessageSample>?,
@@ -56,7 +56,6 @@ class TranslateAdapter(
                 messageTextView.text = messageSample.messageString
                 itemView.setOnLongClickListener(this)
             }
-
         }
 
         override fun onLongClick(v: View?): Boolean {

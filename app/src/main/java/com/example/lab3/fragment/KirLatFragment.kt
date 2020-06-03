@@ -7,7 +7,6 @@ import android.view.*
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.PopupMenu
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,14 +16,11 @@ import com.example.lab3.*
 import com.example.lab3.adapters.RecyclerViewAdapter
 import com.example.lab3.databases.MessageDao
 import com.example.lab3.databases.MessageDatabase
-import com.example.lab3.message_samples.MessageSample
+import com.example.lab3.models.MessageSample
 import com.example.lab3.utils.KirLatTranslator
 import com.example.lab3.utils.MessageItemDecoration
 import com.example.lab3.utils.SharedPreferencesConfig
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 

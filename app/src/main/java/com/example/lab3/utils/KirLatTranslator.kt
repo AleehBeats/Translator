@@ -1,7 +1,7 @@
 package com.example.lab3.utils
 
 import com.afollestad.materialdialogs.MaterialDialog
-import com.example.lab3.message_samples.MessageSample
+import com.example.lab3.models.MessageSample
 import java.lang.StringBuilder
 
 class KirLatTranslator() {

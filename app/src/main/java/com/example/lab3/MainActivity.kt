@@ -19,8 +19,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 class MainActivity : AppCompatActivity() {
     private val fragmentManager: FragmentManager = supportFragmentManager
     private lateinit var bottomNavigation: BottomNavigationView
-    //te
-    //
     private lateinit var toolbar: Toolbar
     private lateinit var title: TextView
     private val kirLatFragment = KirLatFragment()
@@ -56,7 +54,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun bindViews() {
         toolbar = findViewById(R.id.toolbar)
-        title = findViewById(R.id.name)
+        title = findViewById(R.id.nameTextView)
         themeModeImage = findViewById(R.id.themeModeImage)
         toolbar.title=""
         toolbar.popupTheme=R.style.ToolbarTheme
@@ -103,6 +101,7 @@ class MainActivity : AppCompatActivity() {
                     .commit()
                 title.text = getString(R.string.kirlat_fragment)
                 isTranslateFragment=false
+
                 return@OnNavigationItemSelectedListener true
             }
             R.id.profile -> {

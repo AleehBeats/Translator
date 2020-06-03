@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.lab3.R
 import com.example.lab3.utils.SharedPreferencesConfig
 import com.example.lab3.adapters.FavouritesAdapter
-import com.example.lab3.message_samples.FavouriteMessageSample
+import com.example.lab3.models.FavouriteMessageSample
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_favourites.*
 import java.util.*

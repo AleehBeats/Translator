@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "549152956769",
+    "firebase_url": "https://translator-c86ef.firebaseio.com",
+    "project_id": "translator-c86ef",
+    "storage_bucket": "translator-c86ef.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:549152956769:android:eb4ea933262802b3142520",
+        "android_client_info": {
+          "package_name": "com.example.lab3"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "549152956769-5hq7ki5n4ivra8l0m9ks1nsm7vm0igm3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAGR3AU7jsteQ6KUAAjCUuqwrAQR1bkJfs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "549152956769-5hq7ki5n4ivra8l0m9ks1nsm7vm0igm3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

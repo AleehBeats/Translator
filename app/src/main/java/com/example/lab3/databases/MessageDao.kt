@@ -1,7 +1,7 @@
 package com.example.lab3.databases
 
 import androidx.room.*
-import com.example.lab3.message_samples.MessageSample
+import com.example.lab3.models.MessageSample
 
 @Dao
 interface MessageDao {

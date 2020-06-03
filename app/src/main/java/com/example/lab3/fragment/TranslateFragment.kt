@@ -15,17 +15,13 @@ import com.example.lab3.utils.KirLatTranslator
 import com.example.lab3.utils.MessageItemDecoration
 import com.example.lab3.R
 import com.example.lab3.utils.SharedPreferencesConfig
-import com.example.lab3.adapters.RecyclerViewAdapter
 import com.example.lab3.adapters.TranslateAdapter
 import com.example.lab3.key
-import com.example.lab3.message_samples.MessageSample
-import com.example.lab3.message_samples.TranslatedMessage
+import com.example.lab3.models.MessageSample
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.activity_main.*
 
 class TranslateFragment : Fragment(), TranslateAdapter.MessageClickListener,
     PopupMenu.OnMenuItemClickListener {
