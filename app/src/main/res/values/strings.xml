@@ -30,4 +30,6 @@
     <string name="layout">layout</string>
     <string name="exit">Шығу</string>
     <string name="saving_user">user</string>
+    <string name="word_count">word count</string>
+    <string name="word_count_label">Аударылған сөздер саны:</string>
 </resources>

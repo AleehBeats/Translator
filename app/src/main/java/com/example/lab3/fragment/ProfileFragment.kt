@@ -3,6 +3,7 @@ package com.example.lab3.fragment
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +14,7 @@ import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.example.lab3.R
 import com.example.lab3.models.User
+import com.example.lab3.models.UserConverter
 import com.example.lab3.utils.SharedPreferencesConfig
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -20,6 +22,12 @@ import com.google.android.gms.common.SignInButton
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.database
+import com.google.firebase.database.ktx.getValue
+import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.fragment_profile_authorized.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -37,10 +45,8 @@ class ProfileFragment : Fragment(), CoroutineScope {
     private lateinit var user: User
     private var isSignedIn: Boolean = false
     private lateinit var layout: View
-    private var name: String? = null
-    private var email: String? = null
-    private var image: Uri? = null
     private val job = Job()
+    private val database = Firebase.database
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -78,13 +84,37 @@ class ProfileFragment : Fragment(), CoroutineScope {
     private fun bindViewsSignOut(view: View) {
         signOutButton = view.findViewById(R.id.signOutButton)
         val user = sharedPreferencesConfig.extractingUser()
-        name = user.username
-        email=user.email
-        image=user.uri?.toUri()
-        bindingData()
+        val name = user.username
+        val email = user.email
+        val image = user.uri?.toUri()
+        val wordCount = sharedPreferencesConfig.extractingWordCount()
+        if (name != null && email != null && image != null)
+            bindingData(name, email, image, wordCount)
         signOutButton.setOnClickListener {
             signOut()
         }
+    }
+
+    private fun readFirebaseDatabase() {
+        val reference = database.getReference("user")
+        reference.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(data: DataSnapshot) {
+                val userList = data.getValue<List<HashMap<String, String>>>()
+                val convertedUser = userList?.map {
+                    return@map UserConverter().convert(it)
+                }
+
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.d("onCancelled", error.message)
+            }
+        })
+    }
+
+    private fun writeFirebaseDatabase(user: User, userId: String) {
+        val reference = database.getReference("user")
+        reference.child(userId).setValue(user)
     }
 
     private fun signOut() {
@@ -125,12 +155,17 @@ class ProfileFragment : Fragment(), CoroutineScope {
                                 firebaseAuth?.currentUser?.let { profile ->
                                     profile.getIdToken(true).addOnCompleteListener { result ->
                                         result.result?.token
-                                        name = profile.displayName
-                                        email = profile.email
-                                        image = profile.photoUrl
-                                        user = User(name, email, image.toString())
+                                        val name = profile.displayName
+                                        val email = profile.email
+                                        val image = profile.photoUrl
+                                        val userId = profile.uid
+                                        val wordCount = sharedPreferencesConfig.extractingWordCount()
+                                        user = User(name, email, image.toString(), wordCount)
+                                        writeFirebaseDatabase(user, userId)
                                         sharedPreferencesConfig.savingUser(user)
-                                        bindingData()
+                                        if (name != null && email != null && image != null) {
+                                            bindingData(name, email, image, wordCount)
+                                        }
 //                                    Glide.with(this).load(user.photoUrl).into(avatarImageView)
                                     }
                                     if (!isSignedIn)
@@ -145,9 +180,10 @@ class ProfileFragment : Fragment(), CoroutineScope {
         }
     }
 
-    private fun bindingData() {
+    private fun bindingData(name: String, email: String, image: Uri, wordCount:String) {
         nameTextView.text = name
         emailTextView.text = email
+        wordCountTextView.text=wordCount
         Glide.with(this).load(image).into(avatarImageView)
     }
 

@@ -6,6 +6,27 @@
     android:layout_height="match_parent">
 
     <TextView
+        android:id="@+id/wordCountTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:layout_below="@id/emailTextView"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="10dp"
+        android:padding="18dp"
+        android:textSize="16sp"/>
+
+    <TextView
+        android:id="@+id/wordCountLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/word_count_label"
+        android:layout_below="@id/emailTextView"
+        android:layout_marginStart="10dp"
+        android:textSize="16sp"
+        android:padding="18dp"/>
+
+    <TextView
         android:id="@+id/nameTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -22,6 +43,7 @@
         android:layout_width="140dp"
         android:layout_height="140dp"
         android:layout_centerHorizontal="true"
+        android:padding="18dp"
         android:layout_above="@id/nameTextView"
         android:background="@drawable/image_shape"
          />
@@ -42,9 +64,9 @@
         android:id="@+id/signOutButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/emailTextView"
-        android:layout_centerHorizontal="true"
+        android:layout_below="@id/wordCountLabel"
         android:background="?attr/colorPrimary"
+        android:layout_marginStart="10dp"
         android:padding="18dp"
         android:text="@string/exit"
         android:textColor="#FF0000" />

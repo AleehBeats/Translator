@@ -29,6 +29,7 @@ class TranslateFragment : Fragment(), TranslateAdapter.MessageClickListener,
     private var messageString: String = ""
     private var messageId: Int = 0
     private var textEraser: String = ""
+    private var wordCounter: Int = 0
 
     private lateinit var sendImage: ImageView
     private lateinit var inputMessage: EditText
@@ -43,8 +44,6 @@ class TranslateFragment : Fragment(), TranslateAdapter.MessageClickListener,
     private val exchangeApiService = ExchangeApiService.create()
     private val disposable = CompositeDisposable()
     private var languageDirection: String = ""
-    private lateinit var kirLatTranslator: KirLatTranslator
-    private lateinit var toolbar: Toolbar
     private var lastVisibleItem = 0
     private var itemPosition = 0
     private val scrollListener = object : RecyclerView.OnScrollListener() {
@@ -82,6 +81,7 @@ class TranslateFragment : Fragment(), TranslateAdapter.MessageClickListener,
                 it
             )
         }!!
+        wordCounter = sharedPreferencesConfig.extractingWordCount().toInt()
         messageSampleList = sharedPreferencesConfig.extractingTranslatedMessages()
         bindViews(view)
         setAdapter()
@@ -99,6 +99,7 @@ class TranslateFragment : Fragment(), TranslateAdapter.MessageClickListener,
 
     override fun onDestroy() {
         sharedPreferencesConfig.savingTranslatedMessages(messageSampleList)
+        sharedPreferencesConfig.savingWordCount(wordCounter.toString())
         super.onDestroy()
         disposable.dispose()
     }
@@ -109,7 +110,7 @@ class TranslateFragment : Fragment(), TranslateAdapter.MessageClickListener,
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId) {
+        when (item.itemId) {
             R.id.chEngRus -> {
                 languageDirection = "en-ru"
                 return true
@@ -121,6 +122,7 @@ class TranslateFragment : Fragment(), TranslateAdapter.MessageClickListener,
         }
         return false
     }
+
     override fun showPopUpMenu(position: Int, itemView: View) {
         val popup = PopupMenu(context, itemView)
         itemPosition = position
@@ -211,7 +213,7 @@ class TranslateFragment : Fragment(), TranslateAdapter.MessageClickListener,
         sendImage.setOnClickListener {
             if (inputMessage.text.isNotEmpty()) {
                 creatingRequestMessage()
-
+                wordCounter++
             } else {
 
             }

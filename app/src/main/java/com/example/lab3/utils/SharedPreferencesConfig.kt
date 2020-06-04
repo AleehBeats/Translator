@@ -2,7 +2,6 @@ package com.example.lab3.utils
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.widget.Toast
 import com.example.lab3.R
 import com.example.lab3.models.FavouriteMessageSample
 import com.example.lab3.models.MessageSample
@@ -41,13 +40,13 @@ class SharedPreferencesConfig(private val context: Context?) {
         return messageList
     }
 
-    fun savingLayout(isSigned:Boolean) {
+    fun savingLayout(isSigned: Boolean) {
         editor = sharedPreferences.edit()
         editor.putBoolean(context?.getString(R.string.layout), isSigned)
         editor.apply()
     }
 
-    fun extractingLayout(): Boolean{
+    fun extractingLayout(): Boolean {
         return sharedPreferences.getBoolean(context?.getString(R.string.layout), false)
     }
 
@@ -99,16 +98,16 @@ class SharedPreferencesConfig(private val context: Context?) {
         return selectedMessage
     }
 
-    fun savingUser(user: User){
+    fun savingUser(user: User) {
         editor = sharedPreferences.edit()
         jsonString = gson.toJson(user)
         editor.putString(context?.getString(R.string.saving_user), jsonString)
         editor.apply()
     }
 
-    fun extractingUser():User{
-        val user:User
-        if(sharedPreferences.contains(context?.getString(R.string.saving_user))){
+    fun extractingUser(): User {
+        val user: User
+        if (sharedPreferences.contains(context?.getString(R.string.saving_user))) {
             jsonString = sharedPreferences.getString(
                 context?.getString(R.string.saving_user),
                 DEFAULT_MESSAGE
@@ -116,14 +115,27 @@ class SharedPreferencesConfig(private val context: Context?) {
 //            sharedPreferences.edit().remove(context?.getString(R.string.selected_message)).apply()
             type = object : TypeToken<User>() {}.type
             user = gson.fromJson(jsonString, type)
-        }
-        else{
-            user = User("", "", null)
+        } else {
+            user = User("", "", null, DEFAULT_INT_VALUE.toString())
         }
         return user
     }
 
-    fun deletingUser(){
-        sharedPreferences.edit().remove(context?.getString(R.string.saving_user)).apply()
+    fun savingWordCount(wordCount: String) {
+        editor = sharedPreferences.edit()
+        editor.putString(context?.getString(R.string.word_count), wordCount)
+        editor.apply()
+    }
+
+    fun extractingWordCount(): String {
+        val wordCount: String = if (sharedPreferences.contains(context?.getString(R.string.word_count))) {
+            sharedPreferences.getString(
+                context?.getString(R.string.word_count),
+                DEFAULT_INT_VALUE.toString()
+            ).toString()
+        } else {
+            DEFAULT_INT_VALUE.toString()
+        }
+        return wordCount
     }
 }

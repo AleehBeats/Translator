@@ -30,6 +30,7 @@ class KirLatFragment : Fragment(), RecyclerViewAdapter.MessageClickListener,
     private var messageString: String = ""
     private var messageId: Int = -1
     private var textEraser: String = ""
+    private var wordCounter:Int = 0
 
     private lateinit var sendImage: ImageView
     private lateinit var inputMessage: EditText
@@ -75,6 +76,8 @@ class KirLatFragment : Fragment(), RecyclerViewAdapter.MessageClickListener,
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
+        sharedPreferencesConfig = SharedPreferencesConfig(context)
+        wordCounter = sharedPreferencesConfig.extractingWordCount().toInt()
         messageDao = context?.let { MessageDatabase.getDatabase(it).messageDao() }
         extractingMessages()
         bindViews(view)
@@ -92,6 +95,7 @@ class KirLatFragment : Fragment(), RecyclerViewAdapter.MessageClickListener,
     }
 
     override fun onDestroy() {
+        sharedPreferencesConfig.savingWordCount(wordCounter.toString())
         recyclerViewAdapter.messageSamples?.toList()?.let { savingMessages(it) }
         super.onDestroy()
     }
@@ -157,6 +161,7 @@ class KirLatFragment : Fragment(), RecyclerViewAdapter.MessageClickListener,
             if (inputMessage.text.isNotEmpty()) {
                 creatingPairMessages()
                 extractingMessages()
+                wordCounter++
             } else {
 
             }
